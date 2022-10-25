@@ -1,0 +1,61 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "UdrugeContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Data\/DbModels",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "UdrugeWebApi",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[PotrosniResursi]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Prostori]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Resursi]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TrajniResursi]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Udruge]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[VoditeljiUdruge]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "aurelius.Udruge",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

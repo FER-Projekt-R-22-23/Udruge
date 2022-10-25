@@ -1,4 +1,20 @@
+using UdrugeWebApi.Data; 
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// create a configuration (app settings) from the appsettings file, depending on
+// the ENV
+ IConfiguration configuration = builder.Environment.IsDevelopment()
+             ? builder.Configuration.AddJsonFile("appsettings.Development.json").Build()
+             : builder.Configuration.AddJsonFile("appsettings.json").Build();
+
+// register the DbContext -EF ORM
+// this allows the DbContext to be injected
+
+builder.Services.AddDbContext<UdrugeContext>(options => 
+options.UseSqlServer(configuration.GetConnectionString("UdrugeDB")));
+
 
 // Add services to the container.
 
