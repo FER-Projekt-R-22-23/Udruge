@@ -1,5 +1,9 @@
-using UdrugeWebApi.Data; 
+using UdrugeApp.DataAccess.SqlServer.Data;
+using UdrugeApp.DataAccess.SqlServer.Data.DbModels;
+using UdrugeApp.Repositories;
+using UdrugeApp.Repositories.SqlServer;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 // register the DbContext -EF ORM
 // this allows the DbContext to be injected
 
-builder.Services.AddDbContext<UdrugeContext>(options => 
-options.UseSqlServer(configuration.GetConnectionString("UdrugeDB")));
+builder.Services.AddDbContext<UdrugeContext>(options => options.UseSqlServer(configuration.GetConnectionString("UdrugeDB")));
+//Add transients
+//builder.Services.AddTransient<I<ime>, <ime>>();
 
 
 // Add services to the container.

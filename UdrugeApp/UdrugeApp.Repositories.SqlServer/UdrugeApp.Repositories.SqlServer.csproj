@@ -10,4 +10,9 @@
       <PackageReference Include="BaseLibrary" Version="1.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\UdrugeApp.DataAccess.SqlServer\UdrugeApp.DataAccess.SqlServer.csproj" />
+      <ProjectReference Include="..\UdrugeApp.Domain\UdrugeApp.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
