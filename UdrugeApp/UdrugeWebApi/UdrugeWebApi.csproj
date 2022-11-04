@@ -18,4 +18,8 @@
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\UdrugeApp.DataAccess.SqlServer\UdrugeApp.DataAccess.SqlServer.csproj" />
+    </ItemGroup>
+
 </Project>
