@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace UdrugeWebApi.Data.DbModels
+namespace UdrugeApp.DataAccess.SqlServer.Data.DbModels
 {
     public partial class PotrosniResursi
     {

@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using UdrugeWebApi.Data;
-using UdrugeWebApi.Data.DbModels;
+using UdrugeApp.DataAccess.SqlServer.Data;
+using UdrugeApp.DataAccess.SqlServer.Data.DbModels;
 
+
+//TODO popravit kontroler
 namespace UdrugeWebApi.Controllers
 {
     [Route("api/[controller]")]

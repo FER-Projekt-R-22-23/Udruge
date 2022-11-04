@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using UdrugeWebApi.Data.DbModels;
+using UdrugeApp.DataAccess.SqlServer.Data.DbModels;
 
-namespace UdrugeWebApi.Data
+namespace UdrugeApp.DataAccess.SqlServer.Data
 {
     public partial class UdrugeContext : DbContext
     {
