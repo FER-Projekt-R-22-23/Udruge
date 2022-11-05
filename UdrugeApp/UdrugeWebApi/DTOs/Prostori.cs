@@ -16,7 +16,7 @@ public class Prostori
     [StringLength(100, ErrorMessage = "Namjena can't be longer than 100 characters")]
     public string Namjena { get; set; } = string.Empty;
 
- 	[Required(ErrorMessage = "Dodijelio can't be null")]
+ [Required(ErrorMessage = "Dodijelio can't be null")]
     [StringLength(50, ErrorMessage = "Dodijelio can't be longer than 50 characters")]
     public string Dodijelio { get; set; } = string.Empty;
 
