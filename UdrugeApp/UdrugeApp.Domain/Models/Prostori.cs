@@ -4,8 +4,8 @@ using UdrugeApp.Commons;
 namespace UdrugeApp.Domain.Models;
 public class Prostori
 {
-	private int _Id;
-	private int _IdUdruge;
+    private int _Id;
+    private int _IdUdruge;
     private string _Adresa;
     private string _Namjena;
     private string _Dodijelio;
