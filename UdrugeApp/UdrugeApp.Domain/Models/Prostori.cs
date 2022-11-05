@@ -52,7 +52,7 @@ public class Prostori
 
     public override bool Equals(object? obj)
     {
-        return  obj is not null &&
+        return obj is not null &&
                 obj is Prostori Prostori &&
                _Id == Prostori._Id &&
                _IdUdruge == Prostori._IdUdruge &&
