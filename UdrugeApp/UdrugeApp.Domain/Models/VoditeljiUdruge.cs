@@ -58,7 +58,7 @@ public class VoditeljiUdruge
     public override Result IsValid()
         => Validation.Validate(
             (() => _Pozicija.Length <= 10, "Pozicija lenght must be less than 10 characters"),
-            (() => !string.IsNullOrEmpty(_Pozicija.Trim()), "Pozicija can't be null, empty, or whitespace"),
+            (() => !string.IsNullOrEmpty(_Pozicija.Trim()), "Pozicija can't be null, empty, or whitespace")
             );
 
 }

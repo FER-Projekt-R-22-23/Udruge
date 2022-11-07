@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore.Storage;
 namespace UdrugeApp.Repositories.SqlServer;
 public class ProstoriRepository : IProstoriRepository
 {
-    private readonly ExampleDBContext _dbContext;
+    private readonly UdrugeContext _dbContext;
 
-    public ProstoriRepository(ExampleDBContext dbContext)
+    public ProstoriRepository(UdrugeContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -35,7 +35,7 @@ public class ProstoriRepository : IProstoriRepository
         {
             var model = _dbContext.Prostori
                           .AsNoTracking()
-                          .FirstOrDefault(Prostori => Prostori.Id.Equals(id));
+                          .FirstOrDefault(Prostori => Prostori.IdProstor.Equals(id));
             return model is not null;
         }
         catch (Exception)
@@ -50,7 +50,7 @@ public class ProstoriRepository : IProstoriRepository
         {
             var model = _dbContext.Prostori
                           .AsNoTracking()
-                          .FirstOrDefault(Prostori => Prostori.Id.Equals(id))?
+                          .FirstOrDefault(Prostori => Prostori.IdProstor.Equals(id))?
                           .ToDomain();
 
             return model is not null
@@ -67,8 +67,8 @@ public class ProstoriRepository : IProstoriRepository
     {
         try
         {
-            var prostori = _dbContext.prostori
-                                 .Where(r => ids.Contains(r.Id))
+            var prostori = _dbContext.Prostori
+                                 .Where(r => ids.Contains(r.IdUdruge))
                                  .AsNoTracking()
                                  .Select(Mapping.ToDomain);
 
@@ -131,7 +131,7 @@ public class ProstoriRepository : IProstoriRepository
         {
             var model = _dbContext.Prostori
                           .AsNoTracking()
-                          .FirstOrDefault(Prostori => Prostori.Id.Equals(id));
+                          .FirstOrDefault(Prostori => Prostori.IdProstor.Equals(id));
 
             if (model is not null)
             {
