@@ -1,108 +1,112 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using UdrugeApp.Data;
-using UdrugeApp.Data.DbModels;
+using UdrugeApp.Repositories;
+using UdrugeWebApi.DTOs;
+using BaseLibrary;
 
-namespace UdrugeApp.UdrugeWebApi.Controllers
+namespace UdrugeWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ProstoriController : ControllerBase
     {
-        private readonly ExampleContext _context;
+        private readonly IProstoriRepository _ProstoriRepository;
 
-        public ProstoriController(ExampleContext context)
+        public ProstoriController(IProstoriRepository context)
         {
-            _context = context;
+            _ProstoriRepository = context;
         }
 
         // GET: api/Prostori
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Prostori>>> GetAllProstori()
+        public ActionResult<IEnumerable<Prostori>> GetProstori([FromQuery]int[] ids)
         {
-            return await _context.Prostori.ToListAsync();
+            var ProstoriResults = 
+                (ids.Length == 0
+                    ? _ProstoriRepository.GetAll()
+                    : _ProstoriRepository.GetByIds(ids))
+                .Map(Prostori => Prostori.Select(DtoMapping.ToDto));
+
+            return ProstoriResults
+                ? Ok(ProstoriResults.Data)
+                : Problem(ProstoriResults.Message, statusCode: 500);
         }
 
         // GET: api/Prostori/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Prostori>> GetProstori(int id)
+        public ActionResult<Prostori> GetProstori(int id)
         {
-            var Prostori = await _context.Prostori.FindAsync(id);
+            var ProstoriResult = _ProstoriRepository.Get(id).Map(DtoMapping.ToDto);
 
-            if (Prostori == null)
+            return ProstoriResult switch
             {
-                return NotFound();
-            }
-
-            return Prostori;
+                { IsSuccess: true } => Ok(ProstoriResult.Data),
+                { IsFailure: true } => NotFound(),
+                { IsException: true } or _ => Problem(ProstoriResult.Message, statusCode: 500)
+            };
         }
 
         // PUT: api/Prostori/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditProstori(int id, Prostori Prostori)
+        public IActionResult EditProstori(int id, Prostori Prostori)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (id != Prostori.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(Prostori).State = EntityState.Modified;
-
-            try
+            if (!_ProstoriRepository.Exists(id))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProstoriExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return NoContent();
+            var domainProstori = Prostori.ToDomain();
+
+            var result =
+                domainProstori.IsValid()
+                .Bind(() => _ProstoriRepository.Update(domainProstori));
+
+            return result
+                ? AcceptedAtAction("EditProstori", Prostori)
+                : Problem(result.Message, statusCode: 500);
         }
 
         // POST: api/Prostori
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Prostori>> CreateProstori(Prostori Prostori)
+        public ActionResult<Prostori> CreateProstori(Prostori Prostori)
         {
-            _context.Prostori.Add(Prostori);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return CreatedAtAction("GetProstori", new { id = Prostori.Id }, Prostori);
+            var domainProstori = Prostori.ToDomain();
+
+            var result = 
+                domainProstori.IsValid()
+                .Bind(() => _ProstoriRepository.Insert(domainProstori));
+
+            return result
+                ? CreatedAtAction("GetProstori", new { id = Prostori.Id }, Prostori)
+                : Problem(result.Message, statusCode: 500);
         }
 
         // DELETE: api/Prostori/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProstori(int id)
+        public IActionResult DeleteProstori(int id)
         {
-            var Prostori = await _context.Prostori.FindAsync(id);
-            if (Prostori == null)
-            {
+            if (!_ProstoriRepository.Exists(id))
                 return NotFound();
-            }
 
-            _context.Prostori.Remove(Prostori);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ProstoriExists(int id)
-        {
-            return _context.Prostori.Any(e => e.Id == id);
+            var deleteResult = _ProstoriRepository.Remove(id);
+            return deleteResult
+                ? NoContent()
+                : Problem(deleteResult.Message, statusCode: 500);
         }
     }
 }
