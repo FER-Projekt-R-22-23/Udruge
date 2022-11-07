@@ -52,7 +52,7 @@ public class Prostori
 
     public override bool Equals(object? obj)
     {
-        return  obj is not null &&
+        return obj is not null &&
                 obj is Prostori Prostori &&
                _Id == Prostori._Id &&
                _IdUdruge == Prostori._IdUdruge &&
@@ -64,7 +64,7 @@ public class Prostori
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(_Id,_IdUdruge, _Adresa, _Namjena, _Dodijelio, _DodjeljenoDo);
+        return HashCode.Combine(_Id, _IdUdruge, _Adresa, _Namjena, _Dodijelio, _DodjeljenoDo);
     }
 
     public override Result IsValid()
