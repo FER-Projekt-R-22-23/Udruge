@@ -1,6 +1,5 @@
-using UdrugeApp.Commons;
 using BaseLibrary;
-
+using UdrugeApp.Commons;
 
 namespace UdrugeApp.Domain.Models;
 public class Prostori
@@ -30,7 +29,7 @@ public class Prostori
         {
             throw new ArgumentException($"'{nameof(Namjena)}' cannot be null or empty.", nameof(Namjena));
         }
-       if (int.IsNullOrEmpty(id))
+        if (int.IsNullOrEmpty(id))
         {
             throw new ArgumentException($"'{nameof(id)}' cannot be null or empty.", nameof(id));
         }
@@ -60,12 +59,12 @@ public class Prostori
                _Adresa == Prostori._Adresa &&
                _Namjena == Prostori._Namjena &&
                _Dodijelio == Prostori._Dodijelio &&
-               _DodjeljenoDo == Prostori._DodjeljenoDo;
+               _DodjeljenoDo == Prostori._DodjeljenoDo
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(_Id,_IdUdruge, _Adresa, _Namjena, _Dodijelio, _DodjeljenoDo);
+        return HashCode.Combine(_Id, _IdUdruge, _Adresa, _Namjena, _Dodijelio, _DodjeljenoDo);
     }
 
     public override Result IsValid()

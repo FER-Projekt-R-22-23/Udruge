@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="BaseLibrary" Version="1.0.0" />
+	  <ProjectReference Include="..\UdrugeApp.Commons\UdrugeApp.Commons.csproj" />
     </ItemGroup>
 
 </Project>

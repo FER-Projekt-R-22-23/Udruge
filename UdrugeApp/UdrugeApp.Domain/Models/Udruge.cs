@@ -5,7 +5,7 @@ using System.Data;
 
 namespace UdrugeApp.Domain.Models
 {
-    public class Udruge : AggregateRoot<int>
+    public class Udruge : Entity<int>
     {
         private int _IdUdruge;
         private string _OIB;
@@ -22,27 +22,27 @@ namespace UdrugeApp.Domain.Models
         public string Mail { get => _Mail; set => _Mail = value; }
 
         public Udruge(int idUdruge, string OIB, string Naziv, string Sjediste, string BrMob, string Mail) {
-            if (string.isNullOrEmpty(OIB))
+            if (string.IsNullOrEmpty(OIB))
             {
                 throw new ArgumentException($" '{nameof(OIB)}' cannot be null or empty.", nameof(OIB));
             }
 
-            if (string.isNullOrEmpty(Naziv))
+            if (string.IsNullOrEmpty(Naziv))
             {
                 throw new ArgumentException($" '{nameof(Naziv)}' cannot be null or empty.", nameof(Naziv));
             }
 
-            if (string.isNullOrEmpty(Sjediste))
+            if (string.IsNullOrEmpty(Sjediste))
             {
                 throw new ArgumentException($" '{nameof(Sjediste)}' cannot be null or empty.", nameof(Sjediste));
             }
 
-            if (string.isNullOrEmpty(BrMob))
+            if (string.IsNullOrEmpty(BrMob))
             {
                 throw new ArgumentException($" '{nameof(BrMob)}' cannot be null or empty.", nameof(BrMob));
             }
 
-            if (string.isNullOrEmpty(Mail))
+            if (string.IsNullOrEmpty(Mail))
             {
                 throw new ArgumentException($" '{nameof(Mail)}' cannot be null or empty.", nameof(Mail));
             }
@@ -75,9 +75,9 @@ namespace UdrugeApp.Domain.Models
         public override Result IsValid()
             => Validation.Validate(
                 (() => _OIB.Length == 11, "OIB length must be 11 characters"),
-                (() => _Naziv.Length <= 30, "Naziv length must be less than 30 characters")
-                (() => _Sjediste.Length <= 60, "Sjediste length must be less than 60 characters")
-                (() => _BrMob.Length <= 15, "BrMob length must be less than 15 characters")
+                (() => _Naziv.Length <= 30, "Naziv length must be less than 30 characters"),
+                (() => _Sjediste.Length <= 60, "Sjediste length must be less than 60 characters"),
+                (() => _BrMob.Length <= 15, "BrMob length must be less than 15 characters"),
                 (() => _Mail.Length <= 50, "Mail length must be less than 50 characters")
                 );
     }

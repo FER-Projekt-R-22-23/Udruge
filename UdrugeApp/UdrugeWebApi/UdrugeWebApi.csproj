@@ -22,6 +22,8 @@
     <ItemGroup>
       <ProjectReference Include="..\UdrugeApp.DataAccess.SqlServer\UdrugeApp.DataAccess.SqlServer.csproj" />
       <ProjectReference Include="..\UdrugeApp.Repositories.SqlServer\UdrugeApp.Repositories.SqlServer.csproj" />
+      <ProjectReference Include="..\UdrugeApp.Commons\UdrugeApp.Commons.csproj" />
+	  <ProjectReference Include="..\UdrugeApp.Repositories\UdrugeApp.Repositories.csproj" />
     </ItemGroup>
 
 </Project>
