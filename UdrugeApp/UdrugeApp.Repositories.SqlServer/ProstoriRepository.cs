@@ -62,7 +62,25 @@ public class ProstoriRepository : IProstoriRepository
             return Results.OnException<Prostori>(e);
         }
     }
+    
+    public Result<IEnumerable<Prostori>> GetByIds(int[] ids)
+    {
+        try
+        {
+            var prostori = _dbContext.prostori
+                                 .Where(r => ids.Contains(r.Id))
+                                 .AsNoTracking()
+                                 .Select(Mapping.ToDomain);
 
+
+
+            return Results.OnSuccess(prostori);
+        }
+        catch (Exception e)
+        {
+            return Results.OnException<IEnumerable<Prostori>>(e);
+        }
+    }
 
     public Result<IEnumerable<Prostori>> GetAll()
     {

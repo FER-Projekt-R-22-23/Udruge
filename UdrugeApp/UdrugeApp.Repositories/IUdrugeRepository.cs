@@ -9,9 +9,6 @@ namespace UdrugeApp.Repositories;
 /// <typeparam name="TDomainModel"></typeparam>
 
     public interface IUdrugeRepository
-        : IRepository<int, Udruge>,
-          IAggregateRepository<int, Udruge>
-
-
+        : IRepository<int, Udruge>
     {
     }

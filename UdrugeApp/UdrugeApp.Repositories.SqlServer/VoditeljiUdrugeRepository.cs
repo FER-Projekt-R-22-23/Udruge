@@ -1,28 +1,25 @@
-﻿using UdrugeApp.DataAccess.SqlServer.Data;
+using ExampleApp.DataAccess.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
-using UdrugeApp.Domain.Models;
+using ExampleApp.Domain.Models;
 using BaseLibrary;
-using UdrugeApp.Repositories;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using UdrugeApp.Repositories.SqlServer;
 
-namespace UdrugeApp.Repositories.SqlServer;
-public class UdrugeRepository : IUdrugeRepository
+namespace ExampleApp.Repositories.SqlServer;
+public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
 {
     private readonly ExampleDBContext _dbContext;
 
-    public UdrugeRepository(ExampleDBContext dbContext)
+    public VoditeljiUdrugeRepository(ExampleDBContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public bool Exists(Udruge model)
+    public bool Exists(VoditeljiUdruge model)
     {
         try
         {
-            return _dbContext.Udruge
+            return _dbContext.VoditeljiUdruge
                      .AsNoTracking()
                      .Contains(model.ToDbModel());
         }
@@ -36,9 +33,9 @@ public class UdrugeRepository : IUdrugeRepository
     {
         try
         {
-            var model = _dbContext.Udruge
+            var model = _dbContext.VoditeljiUdruge
                           .AsNoTracking()
-                          .FirstOrDefault(Udruge => Udruge.Id.Equals(id));
+                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.Id.Equals(id));
             return model is not null;
         }
         catch (Exception)
@@ -47,32 +44,45 @@ public class UdrugeRepository : IUdrugeRepository
         }
     }
 
-    public Result<Udruge> Get(int id)
+    public bool Exists(int id)
     {
         try
         {
-            var model = _dbContext.Udruge
+            var model = _dbContext.VoditeljiUdruge
                           .AsNoTracking()
-                          .FirstOrDefault(Udruge => Udruge.Id.Equals(id))?
-                          .ToDomain();
-
-            return model is not null
-            ? Results.OnSuccess(model)
-                : Results.OnFailure<Udruge>($"No Udruge with id {id} found");
+                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.Id.Equals(id));
+            return model is not null;
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return Results.OnException<Udruge>(e);
+            return false;
         }
     }
 
-   
-
-    public Result<IEnumerable<Udruge>> GetAll()
+    public Result<VoditeljiUdruge> Get(int id)
     {
         try
         {
-            var models = _dbContext.Udruge
+            var model = _dbContext.VoditeljiUdruge
+                          .AsNoTracking()
+                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.Id.Equals(id))?
+                          .ToDomain();
+
+            return model is not null
+                ? Results.OnSuccess(model)
+                : Results.OnFailure<VoditeljiUdruge>($"No VoditeljiUdruge with id {id} found");
+        }
+        catch (Exception e)
+        {
+            return Results.OnException<VoditeljiUdruge>(e);
+        }
+    }
+
+    public Result<IEnumerable<VoditeljiUdruge>> GetAll()
+    {
+        try
+        {
+            var models = _dbContext.VoditeljiUdruge
                            .AsNoTracking()
                            .Select(Mapping.ToDomain);
 
@@ -80,18 +90,16 @@ public class UdrugeRepository : IUdrugeRepository
         }
         catch (Exception e)
         {
-            return Results.OnException<IEnumerable<Udruge>>(e);
+            return Results.OnException<IEnumerable<VoditeljiUdruge>>(e);
         }
     }
 
-   
-
-    public Result Insert(Udruge model)
+    public Result Insert(VoditeljiUdruge model)
     {
         try
         {
             var dbModel = model.ToDbModel();
-            if (_dbContext.People.Add(dbModel).State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            if (_dbContext.VoditeljiUdruge.Add(dbModel).State == Microsoft.EntityFrameworkCore.EntityState.Added)
             {
                 var isSuccess = _dbContext.SaveChanges() > 0;
 
@@ -116,13 +124,13 @@ public class UdrugeRepository : IUdrugeRepository
     {
         try
         {
-            var model = _dbContext.Prostori
+            var model = _dbContext.VoditeljiUdruge
                           .AsNoTracking()
-                          .FirstOrDefault(Prostori => Prostori.Id.Equals(id));
+                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.Id.Equals(id));
 
             if (model is not null)
             {
-                _dbContext.Prostori.Remove(model);
+                _dbContext.VoditeljiUdruge.Remove(model);
 
                 return _dbContext.SaveChanges() > 0
                     ? Results.OnSuccess()
@@ -136,15 +144,13 @@ public class UdrugeRepository : IUdrugeRepository
         }
     }
 
-
-
-    public Result Update(Udruge model)
+    public Result Update(VoditeljiUdruge model)
     {
         try
         {
             var dbModel = model.ToDbModel();
             // detach
-            if (_dbContext.Udruge.Update(dbModel).State == Microsoft.EntityFrameworkCore.EntityState.Modified)
+            if (_dbContext.VoditeljiUdruge.Update(dbModel).State == Microsoft.EntityFrameworkCore.EntityState.Modified)
             {
                 var isSuccess = _dbContext.SaveChanges() > 0;
 
@@ -163,7 +169,15 @@ public class UdrugeRepository : IUdrugeRepository
         {
             return Results.OnException(e);
         }
-    }
+    }   
+ } 
 
-    
+
+
+
+
+
+
+
+
 }
