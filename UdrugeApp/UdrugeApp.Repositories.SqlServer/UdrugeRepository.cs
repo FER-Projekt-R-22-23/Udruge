@@ -1,12 +1,14 @@
-﻿
+﻿using UdrugeApp.DataAccess.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
 using UdrugeApp.Domain.Models;
-using UdrugeApp.Repositories;
 using BaseLibrary;
+using UdrugeApp.Repositories;
+using System.Transactions;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using UdrugeApp.Repositories.SqlServer;
 
-
-
-namespace UdrugeApp.Repositories.SqlServer;
+namespace ExampleApp.Repositories.SqlServer;
 public class UdrugeRepository : IUdrugeRepository
 {
     private readonly ExampleDBContext _dbContext;
@@ -36,7 +38,7 @@ public class UdrugeRepository : IUdrugeRepository
         {
             var model = _dbContext.Udruge
                           .AsNoTracking()
-                          .FirstOrDefault(Udruge => Udruge.id.Equals(id));
+                          .FirstOrDefault(Udruge => Udruge.Id.Equals(id));
             return model is not null;
         }
         catch (Exception)
@@ -55,7 +57,7 @@ public class UdrugeRepository : IUdrugeRepository
                           .ToDomain();
 
             return model is not null
-                ? Results.OnSuccess(model)
+            ? Results.OnSuccess(model)
                 : Results.OnFailure<Udruge>($"No Udruge with id {id} found");
         }
         catch (Exception e)
@@ -64,6 +66,7 @@ public class UdrugeRepository : IUdrugeRepository
         }
     }
 
+   
 
     public Result<IEnumerable<Udruge>> GetAll()
     {
@@ -81,13 +84,14 @@ public class UdrugeRepository : IUdrugeRepository
         }
     }
 
+   
 
     public Result Insert(Udruge model)
     {
         try
         {
             var dbModel = model.ToDbModel();
-            if (_dbContext.Udruge.Add(dbModel).State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            if (_dbContext.People.Add(dbModel).State == Microsoft.EntityFrameworkCore.EntityState.Added)
             {
                 var isSuccess = _dbContext.SaveChanges() > 0;
 
@@ -112,13 +116,13 @@ public class UdrugeRepository : IUdrugeRepository
     {
         try
         {
-            var model = _dbContext.Udruge
+            var model = _dbContext.Prostori
                           .AsNoTracking()
-                          .FirstOrDefault(Udruge => Udruge.Id.Equals(id));
+                          .FirstOrDefault(Prostori => Prostori.Id.Equals(id));
 
             if (model is not null)
             {
-                _dbContext.Udruge.Remove(model);
+                _dbContext.Prostori.Remove(model);
 
                 return _dbContext.SaveChanges() > 0
                     ? Results.OnSuccess()
@@ -131,6 +135,8 @@ public class UdrugeRepository : IUdrugeRepository
             return Results.OnException(e);
         }
     }
+
+
 
     public Result Update(Udruge model)
     {
@@ -159,4 +165,5 @@ public class UdrugeRepository : IUdrugeRepository
         }
     }
 
+    
 }
