@@ -1,9 +1,11 @@
 ﻿using BaseLibrary;
 using UdrugeApp.Commons;
+using System;
+using System.Data;
 
 namespace UdrugeApp.Domain.Models
 {
-    public class Udruge
+    public class Udruge : AggregateRoot<int>
     {
         private int _IdUdruge;
         private string _OIB;
