@@ -29,5 +29,27 @@ public static class Mapping
             
         };
 
+    public static Prostori ToDomain(this DbModels.Prostori prostori)
+       => new Prostori(
+           prostori.IdProstor,
+           prostori.IdUdruge,
+           prostori.Adresa,
+           prostori.Namjena,
+           prostori.Dodijelio,
+           prostori.DodjeljenoDo
+           
+    );
+
+    public static DbModels.Prostori ToDbModel(this Prostori prostori)
+        => new DbModels.Prostori()
+        {
+            IdProstor = prostori.Id,
+            IdUdruge = prostori.IdUdruge,
+            Adresa = prostori.Adresa,
+            Namjena = prostori.Namjena,
+            Dodijelio = prostori.Dodijelio,
+            DodjeljenoDo = prostori.DodjeljenoDo
+        };
+
 
 }
