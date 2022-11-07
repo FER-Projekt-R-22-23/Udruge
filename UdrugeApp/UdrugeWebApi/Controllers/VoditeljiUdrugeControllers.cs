@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using ExampleApp.Repositories;
 using ExampleWebApi.DTOs;
 using BaseLibrary;
+using ExampleApp.Domain.Models;
+using UdrugeApp.Repositories;
 
-namespace ExampleWebApi.Controllers
+namespace UdrugeWebApi.Controllers
 {
 
     [Route("api/[controller]")]
