@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using UdrugeApp.Data;
 using UdrugeApp.Data.DbModels;
 
-namespace UdrugeApp.UdrufeWebApi.Controllers
+namespace UdrugeApp.UdrugeWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
