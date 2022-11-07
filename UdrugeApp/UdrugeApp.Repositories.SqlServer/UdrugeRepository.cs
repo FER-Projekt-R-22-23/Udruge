@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using UdrugeApp.Repositories.SqlServer;
 
-namespace ExampleApp.Repositories.SqlServer;
+namespace UdrugeApp.Repositories.SqlServer;
 public class UdrugeRepository : IUdrugeRepository
 {
     private readonly ExampleDBContext _dbContext;

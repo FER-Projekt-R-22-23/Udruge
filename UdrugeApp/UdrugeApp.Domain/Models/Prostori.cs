@@ -2,7 +2,7 @@ using BaseLibrary;
 using UdrugeApp.Commons;
 
 namespace UdrugeApp.Domain.Models;
-public class Prostori
+public class Prostori : Entity<int>
 {
     private int _Id;
     private int _IdUdruge;
@@ -18,7 +18,7 @@ public class Prostori
     public string Dodijelio { get => _Dodijelio; set => _Dodijelio = value; }
     public DateTime? DodjeljenoDo { get => _DodjeljenoDo; set => _DodjeljenoDo = value; }
 
-    public Prostori(int id, int idUdruge, string Adresa, string Namjena, string Dodijelio, DateTime? DodjeljenoDo)
+    public Prostori(int id, int idUdruge, string Adresa, string Namjena, string Dodijelio, DateTime? DodjeljenoDo) : base(id)
     {
         if (string.IsNullOrEmpty(Adresa))
         {
@@ -29,11 +29,11 @@ public class Prostori
         {
             throw new ArgumentException($"'{nameof(Namjena)}' cannot be null or empty.", nameof(Namjena));
         }
-        if (int.IsNullOrEmpty(id))
+        if (string.IsNullOrEmpty(id.ToString()))
         {
             throw new ArgumentException($"'{nameof(id)}' cannot be null or empty.", nameof(id));
         }
-        if (int.IsNullOrEmpty(idUdruge))
+        if (string.IsNullOrEmpty(idUdruge.ToString()))
         {
             throw new ArgumentException($"'{nameof(idUdruge)}' cannot be null or empty.", nameof(idUdruge));
         }
@@ -53,13 +53,13 @@ public class Prostori
     public override bool Equals(object? obj)
     {
         return obj is not null &&
-                obj is Prostori Prostori &&
+               obj is Prostori Prostori &&
                _Id == Prostori._Id &&
                _IdUdruge == Prostori._IdUdruge &&
                _Adresa == Prostori._Adresa &&
                _Namjena == Prostori._Namjena &&
                _Dodijelio == Prostori._Dodijelio &&
-               _DodjeljenoDo == Prostori._DodjeljenoDo
+               _DodjeljenoDo == Prostori._DodjeljenoDo;
     }
 
     public override int GetHashCode()

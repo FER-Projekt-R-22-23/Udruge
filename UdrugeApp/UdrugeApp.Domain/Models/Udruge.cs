@@ -21,7 +21,12 @@ namespace UdrugeApp.Domain.Models
         public string BrMob { get => _BrMob; set => _BrMob = value; }
         public string Mail { get => _Mail; set => _Mail = value; }
 
-        public Udruge(int idUdruge, string OIB, string Naziv, string Sjediste, string BrMob, string Mail) {
+        public Udruge(int idUdruge, string OIB, string Naziv, string Sjediste, string BrMob, string Mail) : base(idUdruge)
+        {
+            if (string.IsNullOrEmpty(idUdruge.ToString()))
+            {
+                throw new ArgumentException($" '{nameof(idUdruge)}' cannot be null or empty.", nameof(idUdruge));
+            }
             if (string.IsNullOrEmpty(OIB))
             {
                 throw new ArgumentException($" '{nameof(OIB)}' cannot be null or empty.", nameof(OIB));
