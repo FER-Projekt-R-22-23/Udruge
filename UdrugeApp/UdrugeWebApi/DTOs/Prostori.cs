@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using DomainModels = UdrugeApp.Domain.Models;
 
-namespace ExampleWebApi.DTOs;
+namespace UdrugeWebApi.DTOs;
 
 public class Prostori
 {
