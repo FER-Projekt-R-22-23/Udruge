@@ -1,16 +1,17 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using UdrugeApp.Domain.Models;
+using UdrugeApp.Repositories;
 using BaseLibrary;
 
 
 
 namespace UdrugeApp.Repositories.SqlServer;
-public class UdrugaRepository : IUdrugeRepository
+public class UdrugeRepository : IUdrugeRepository
 {
     private readonly ExampleDBContext _dbContext;
 
-    public UdrugaRepository(ExampleDBContext dbContext)
+    public UdrugeRepository(ExampleDBContext dbContext)
     {
         _dbContext = dbContext;
     }
