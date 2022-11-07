@@ -1,9 +1,10 @@
+using System;
 using System.ComponentModel.DataAnnotations;
-using DomainModels = ExampleApp.Domain.Models;
+using DomainModels = UdrugeApp.Domain.Models;
 
-namespace ExampleWebApi.DTOs;
+namespace UdrugeWebApi.DTOs;
 
-public class Role
+public class VoditeljiUdruge
 {
     public int Id { get; set; }
     public int IdClan { get; set; }

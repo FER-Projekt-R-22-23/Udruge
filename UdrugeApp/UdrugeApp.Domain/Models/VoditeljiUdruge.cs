@@ -1,7 +1,7 @@
 using BaseLibrary;
-using ExampleApp.Commons;
+using UdrugeApp.Commons;
 
-namespace ExampleApp.Domain.Models;
+namespace UdrugeApp.Domain.Models;
 public class VoditeljiUdruge
 {
     private int _Id;
@@ -23,12 +23,12 @@ public class VoditeljiUdruge
             throw new ArgumentException($"'{nameof(Pozicija)}' cannot be null or empty.", nameof(Pozicija));
         }
 
-        if (int.IsNullOrEmpty(id))
+        if (string.IsNullOrEmpty(id.ToString()))
         {
             throw new ArgumentException($"'{nameof(id)}' cannot be null or empty.", nameof(id));
         }
 
-        if (int.IsNullOrEmpty(idClan))
+        if (string.IsNullOrEmpty(IdClan.ToString()))
         {
             throw new ArgumentException($"'{nameof(idClan)}' cannot be null or empty.", nameof(idClan));
         }
@@ -44,10 +44,10 @@ public class VoditeljiUdruge
     {
         return obj is not null &&
                 obj is VoditeljiUdruge VoditeljiUdruge &&
-               _Id == Prostori._Id &&
+               _Id == VoditeljiUdruge._Id &&
                _IdClan == VoditeljiUdruge._IdClan &&
                _Pozicija == VoditeljiUdruge._Pozicija &&
-               _NaPozicijiDo == VoditeljiUdruge._NaPozicijiDo
+               _NaPozicijiDo == VoditeljiUdruge._NaPozicijiDo;
     }
 
     public override int GetHashCode()
