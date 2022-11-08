@@ -22,7 +22,7 @@ public class UdrugeController : ControllerBase
 
     // GET: api/Udruge
     [HttpGet]
-    public ActionResult<IEnumerable<Udruge>> GetAllPeople()
+    public ActionResult<IEnumerable<Udruge>> GetAllUdruge()
     {
         var udrugeResults = _udrugeRepository.GetAll()
             .Map(udruge => udruge.Select(DtoMapping.ToDto));
@@ -34,7 +34,7 @@ public class UdrugeController : ControllerBase
 
     // GET: api/Udruge/5
     [HttpGet("{id}")]
-    public ActionResult<Udruge> GetPerson(int id)
+    public ActionResult<Udruge> GetUdruge(int id)
     {
         var udrugeResult = _udrugeRepository.Get(id).Map(DtoMapping.ToDto);
 
@@ -105,7 +105,7 @@ public class UdrugeController : ControllerBase
             : Problem(result.Message, statusCode: 500);
     }
 
-    // DELETE: api/People/5
+    // DELETE: api/Udruge/5
     [HttpDelete("{id}")]
     public IActionResult DeleteUdruge(int id)
     {
