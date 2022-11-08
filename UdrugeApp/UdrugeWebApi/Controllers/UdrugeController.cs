@@ -1,110 +1,120 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using ExampleApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using UdrugeApp.DataAccess.SqlServer.Data;
-using UdrugeApp.DataAccess.SqlServer.Data.DbModels;
+using UdrugeWebApi.DTOs;
+using UdrugeApp.Repositories.SqlServer;
+using UdrugeApp.Repositories;
+using BaseLibrary;
+using System.Data;
+using System;
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-
-//TODO popravit kontroler
-namespace UdrugeWebApi.Controllers
+namespace ExampleWebApi.Controllers;
+[Route("api/[controller]")]
+[ApiController]
+public class UdrugeController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UdrugeController : ControllerBase
+    private readonly IUdrugeRepository _udrugeRepository;
+
+    public UdrugeController(IUdrugeRepository udrugeRepository)
     {
-        private readonly UdrugeContext _context;
+        _udrugeRepository = udrugeRepository;
+    }
 
-        public UdrugeController(UdrugeContext context)
+    // GET: api/Udruge
+    [HttpGet]
+    public ActionResult<IEnumerable<Udruge>> GetAllPeople()
+    {
+        var udrugeResults = _udrugeRepository.GetAll()
+            .Map(udruge => udruge.Select(DtoMapping.ToDto));
+
+        return udrugeResults
+            ? Ok(udrugeResults.Data)
+            : Problem(udrugeResults.Message, statusCode: 500);
+    }
+
+    // GET: api/Udruge/5
+    [HttpGet("{id}")]
+    public ActionResult<Udruge> GetPerson(int id)
+    {
+        var udrugeResult = _udrugeRepository.Get(id).Map(DtoMapping.ToDto);
+
+        return udrugeResult switch
         {
-            _context = context;
+            { IsSuccess: true } => Ok(udrugeResult.Data),
+            { IsFailure: true } => NotFound(),
+            { IsException: true } or _ => Problem(udrugeResult.Message, statusCode: 500)
+        };
+    }
+
+
+    // PUT: api/Udruge/5
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPut("{id}")]
+    public IActionResult EditUdruge(int id, Udruge udruge)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
         }
 
-        // GET: api/Udruge
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Udruge>>> GetUdruge()
+        if (id != udruge._IdUdruge)
         {
-            return Ok(await _context.Udruge.ToListAsync());
+            return BadRequest();
         }
 
-        // // GET: api/Udruge/5
-        // [HttpGet("{id}")]
-        // public async Task<ActionResult<Udruge>> GetUdruge(int id)
-        // {
-        //     var udruge = await _context.Udruge.FindAsync(id);
-        //
-        //     if (udruge == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     return udruge;
-        // }
-        //
-        // // PUT: api/Udruge/5
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> PutUdruge(int id, Udruge udruge)
-        // {
-        //     if (id != udruge.IdUdruge)
-        //     {
-        //         return BadRequest();
-        //     }
-        //
-        //     _context.Entry(udruge).State = EntityState.Modified;
-        //
-        //     try
-        //     {
-        //         await _context.SaveChangesAsync();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!UdrugeExists(id))
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-        //
-        //     return NoContent();
-        // }
-        //
-        // // POST: api/Udruge
-        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // [HttpPost]
-        // public async Task<ActionResult<Udruge>> PostUdruge(Udruge udruge)
-        // {
-        //     _context.Udruge.Add(udruge);
-        //     await _context.SaveChangesAsync();
-        //
-        //     return CreatedAtAction("GetUdruge", new { id = udruge.IdUdruge }, udruge);
-        // }
-        //
-        // // DELETE: api/Udruge/5
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> DeleteUdruge(int id)
-        // {
-        //     var udruge = await _context.Udruge.FindAsync(id);
-        //     if (udruge == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     _context.Udruge.Remove(udruge);
-        //     await _context.SaveChangesAsync();
-        //
-        //     return NoContent();
-        // }
-        //
-        // private bool UdrugeExists(int id)
-        // {
-        //     return _context.Udruge.Any(e => e.IdUdruge == id);
-        // }
+        if (!_udrugeRepository.Exists(id))
+        {
+            return NotFound();
+        }
+
+        var domainUdruge = udruge.ToDomain();
+
+        var result =
+            domainUdruge.IsValid()
+            .Bind(() => _udrugeRepository.Update(domainUdruge));
+
+        return result
+            ? AcceptedAtAction("EditUdruge", udruge)
+            : Problem(result.Message, statusCode: 500);
+    }
+
+    // POST: api/Udruge
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public ActionResult<Udruge> CreateUdruge(Udruge udruge)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var domainUdruge = udruge.ToDomain();
+
+        var validationResult = domainUdruge.IsValid();
+        if (!validationResult)
+        {
+            return Problem(validationResult.Message, statusCode: 500);
+        }
+
+        var result =
+            domainUdruge.IsValid()
+            .Bind(() => _udrugeRepository.Insert(domainUdruge));
+
+        return result
+            ? CreatedAtAction("PostUdruge", new { id = udruge._IdUdruge}, udruge)
+            : Problem(result.Message, statusCode: 500);
+    }
+
+    // DELETE: api/People/5
+    [HttpDelete("{id}")]
+    public IActionResult DeleteUdruge(int id)
+    {
+        if (!_udrugeRepository.Exists(id))
+            return NotFound();
+
+        var deleteResult = _udrugeRepository.Remove(id);
+        return deleteResult
+            ? NoContent()
+            : Problem(deleteResult.Message, statusCode: 500);
     }
 }
