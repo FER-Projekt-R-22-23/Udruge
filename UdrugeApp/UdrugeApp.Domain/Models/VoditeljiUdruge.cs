@@ -16,7 +16,7 @@ public class VoditeljiUdruge : Entity<int>
     public DateTime? NaPozicijiDo { get => _NaPozicijiDo; set => _NaPozicijiDo = value; }
 
 
-    public VoditeljiUdruge(int id, int idClan, string Pozicija, DateTime? NaPozicijiDo)
+    public VoditeljiUdruge(int id, int idClan, string Pozicija, DateTime? NaPozicijiDo) : base(id)
     {
         if (string.IsNullOrEmpty(Pozicija))
         {
