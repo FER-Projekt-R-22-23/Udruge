@@ -2,7 +2,7 @@ using BaseLibrary;
 using UdrugeApp.Commons;
 
 namespace UdrugeApp.Domain.Models;
-public class VoditeljiUdruge
+public class VoditeljiUdruge : Entity<int>
 {
     private int _Id;
     private int _IdClan;
