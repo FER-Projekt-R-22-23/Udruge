@@ -1,16 +1,17 @@
-using ExampleApp.DataAccess.SqlServer.Data;
+using UdrugeApp.DataAccess.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
-using ExampleApp.Domain.Models;
+using UdrugeApp.Domain.Models;
 using BaseLibrary;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore.Storage;
+using UdrugeApp.DataAccess.SqlServer.Data;
 
 namespace ExampleApp.Repositories.SqlServer;
 public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
 {
-    private readonly ExampleDBContext _dbContext;
+    private readonly UdrugeContext _dbContext;
 
-    public VoditeljiUdrugeRepository(ExampleDBContext dbContext)
+    public VoditeljiUdrugeRepository(UdrugeContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -19,7 +20,7 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
     {
         try
         {
-            return _dbContext.VoditeljiUdruge
+            return _dbContext.Udruge
                      .AsNoTracking()
                      .Contains(model.ToDbModel());
         }

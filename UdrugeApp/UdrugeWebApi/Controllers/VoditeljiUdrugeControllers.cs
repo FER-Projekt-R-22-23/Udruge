@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using ExampleApp.Repositories;
-using ExampleWebApi.DTOs;
-using BaseLibrary;
-using ExampleApp.Domain.Models;
 using UdrugeApp.Repositories;
+using UdrugeWebApi.DTOs;
+using BaseLibrary;
+using UdrugeApp.Domain.Models;
+using System.Data;
 
 namespace UdrugeWebApi.Controllers
 {
@@ -20,7 +20,7 @@ namespace UdrugeWebApi.Controllers
             _VoditeljiUdrugeRepository = context;
         }
 
-        // GET: api/Roles/5
+        // GET: api/VoditeljiUdruge/5
         [HttpGet("{id}")]
         public ActionResult<VoditeljiUdruge> GetVoditeljiUdruge(int id)
         {
@@ -28,13 +28,13 @@ namespace UdrugeWebApi.Controllers
 
             return VoditeljiUdrugeResult switch
             {
-                { IsSuccess: true } => Ok(Voditelji<udrugeResult.Data),
+                { IsSuccess: true } => Ok(VoditeljiUdruge<udrugeResult.Data),
                 { IsFailure: true } => NotFound(),
                 { IsException: true } or _ => Problem(VoditeljiUdrugeResult.Message, statusCode: 500)
             };
         }
 
-        // PUT: api/Roles/5
+        // PUT: api/VoditeljiUdruge/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public IActionResult EditVoditeljiUdruge(int id, VoditeljiUdruge VoditeljiUdruge)
@@ -64,7 +64,7 @@ namespace UdrugeWebApi.Controllers
                 : Problem(result.Message, statusCode: 500);
         }
 
-        // POST: api/Roles
+        // POST: api/VoditeljiUdruge
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public ActionResult<VoditeljiUdruge> CreateVoditeljiUdruge(VoditeljiUdruge voditeljiUdruge)
@@ -86,7 +86,7 @@ namespace UdrugeWebApi.Controllers
         }
 
 
-        // DELETE: api/Roles/5
+        // DELETE: api/VoditeljiUdruge/5
         [HttpDelete("{id}")]
         public IActionResult DeleteVoditeljiUdruge(int id)
         {
