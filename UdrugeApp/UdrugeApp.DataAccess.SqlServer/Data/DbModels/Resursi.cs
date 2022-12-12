@@ -14,7 +14,6 @@ namespace UdrugeApp.DataAccess.SqlServer.Data.DbModels
         public int IdResursa { get; set; }
         public int IdUdruge { get; set; }
         public int IdProstor { get; set; }
-        public int InvertarniBroj { get; set; }
         [Required]
         [StringLength(50)]
         [Unicode(false)]
