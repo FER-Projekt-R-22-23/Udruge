@@ -4,7 +4,7 @@ using UdrugeApp.Repositories;
 using UdrugeApp.Repositories.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-
+using ExampleApp.Repositories.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +28,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IUdrugeRepository, UdrugeRepository>();
+builder.Services.AddTransient<IVoditeljiUdrugeRepository, VoditeljiUdrugeRepository>();
+builder.Services.AddTransient<IProstoriRepository, ProstoriRepository>();
+
 
 var app = builder.Build();
 
