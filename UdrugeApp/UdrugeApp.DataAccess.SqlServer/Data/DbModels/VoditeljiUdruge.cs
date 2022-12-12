@@ -24,5 +24,6 @@ namespace UdrugeApp.DataAccess.SqlServer.Data.DbModels
         [ForeignKey("IdUdruge")]
         [InverseProperty("VoditeljiUdruge")]
         public virtual Udruge IdUdrugeNavigation { get; set; }
+        public int Id { get; set; }
     }
 }
