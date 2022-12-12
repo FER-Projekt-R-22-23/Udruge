@@ -12,7 +12,7 @@ public static class Mapping
            udruge.IdUdruge,
            udruge.Oib,
            udruge.Naziv,
-           udruge.Sjedište,
+           udruge.Sjediste,
            udruge.BrMob,
            udruge.Mail
     );
@@ -23,7 +23,7 @@ public static class Mapping
             IdUdruge = udruge.IdUdruge,
             Oib = udruge.OIB,
             Naziv = udruge.Naziv,
-            Sjedište = udruge.Sjediste,
+            Sjediste = udruge.Sjediste,
             BrMob = udruge.BrMob,
             Mail = udruge.Mail
             

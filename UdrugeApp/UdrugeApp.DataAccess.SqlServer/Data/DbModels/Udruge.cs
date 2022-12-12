@@ -32,7 +32,7 @@ namespace UdrugeApp.DataAccess.SqlServer.Data.DbModels
         [Required]
         [StringLength(60)]
         [Unicode(false)]
-        public string Sjedište { get; set; }
+        public string Sjediste { get; set; }
         [StringLength(15)]
         [Unicode(false)]
         public string BrMob { get; set; }
