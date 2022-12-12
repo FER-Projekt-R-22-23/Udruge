@@ -50,6 +50,70 @@ public static class Mapping
             Dodijelio = prostori.Dodijelio,
             DodjeljenoDo = prostori.DodjeljenoDo
         };
+    
+    public static PotrosniResurs ToDomain(this DbModels.PotrosniResursi resurs)
+        => new PotrosniResurs(
+            resurs.IdResursa,
+            resurs.IdResursaNavigation.Naziv,
+            resurs.IdResursaNavigation.Napomena,
+            resurs.IdResursaNavigation.DatumNabave,
+            ToDomain(resurs.IdResursaNavigation.IdUdrugeNavigation),
+            ToDomain(resurs.IdResursaNavigation.IdProstorNavigation),
+            resurs.RokTrajanja
+        );
+
+    //Jel ovo ok jer tamo u resursi ima inverse property
+    public static DbModels.PotrosniResursi ToDbModel(this PotrosniResurs resurs)
+        => new DbModels.PotrosniResursi()
+        {
+            IdResursa = resurs.Id,
+            RokTrajanja = resurs.RokTrajanja,
+            IdResursaNavigation = new DbModels.Resursi()
+            {
+                DatumNabave = resurs.DatumNabave,
+                IdProstor = resurs.Prostor.Id,  
+                IdProstorNavigation = ToDbModel(resurs.Prostor),
+                IdResursa = resurs.Id,
+                IdUdruge = resurs.Udruga.Id,
+                IdUdrugeNavigation = ToDbModel(resurs.Udruga),
+                Napomena = resurs.Napomena,
+                Naziv = resurs.Naziv
+            }
+        };
+    
+    public static TrajniResurs ToDomain(this DbModels.TrajniResursi resurs)
+        => new TrajniResurs(
+            resurs.IdResursa,
+            resurs.IdResursaNavigation.Naziv,
+            resurs.IdResursaNavigation.Napomena,
+            resurs.IdResursaNavigation.DatumNabave,
+            ToDomain(resurs.IdResursaNavigation.IdUdrugeNavigation),
+            ToDomain(resurs.IdResursaNavigation.IdProstorNavigation),
+            resurs.InventarniBroj,
+            resurs.JeDostupno
+        );
+
+    //Jel ovo ok jer tamo u resursi ima inverse property
+    public static DbModels.TrajniResursi ToDbModel(this TrajniResurs resurs)
+        => new DbModels.TrajniResursi()
+        {
+            IdResursa = resurs.Id,
+            IdResursaNavigation = new DbModels.Resursi()
+            {
+                DatumNabave = resurs.DatumNabave,
+                IdProstor = resurs.Prostor.Id,  
+                IdProstorNavigation = ToDbModel(resurs.Prostor),
+                IdResursa = resurs.Id,
+                IdUdruge = resurs.Udruga.Id,
+                IdUdrugeNavigation = ToDbModel(resurs.Udruga),
+                Napomena = resurs.Napomena,
+                Naziv = resurs.Naziv
+            },
+            InventarniBroj = resurs.InventarniBroj,
+            JeDostupno = resurs.JeDostupno
+        };
+    
+    
 
 
     public static VoditeljiUdruge ToDomain(this DbModels.VoditeljiUdruge voditelji)
