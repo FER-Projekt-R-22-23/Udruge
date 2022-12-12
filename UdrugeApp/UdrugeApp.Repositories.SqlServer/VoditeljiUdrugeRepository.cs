@@ -4,7 +4,8 @@ using UdrugeApp.Domain.Models;
 using BaseLibrary;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore.Storage;
-using UdrugeApp.DataAccess.SqlServer.Data;
+using UdrugeApp.Repositories;
+using UdrugeApp.Repositories.SqlServer;
 
 namespace ExampleApp.Repositories.SqlServer;
 public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
@@ -20,7 +21,7 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
     {
         try
         {
-            return _dbContext.Udruge
+            return _dbContext.VoditeljiUdruge
                      .AsNoTracking()
                      .Contains(model.ToDbModel());
         }
@@ -45,7 +46,7 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
         }
     }
 
-    public bool Exists(int id)
+    /*public bool Exists(int id)
     {
         try
         {
@@ -58,7 +59,7 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
         {
             return false;
         }
-    }
+    }*/
 
     public Result<VoditeljiUdruge> Get(int id)
     {
@@ -181,4 +182,3 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
 
 
 
-}

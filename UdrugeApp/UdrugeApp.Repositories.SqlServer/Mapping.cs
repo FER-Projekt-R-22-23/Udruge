@@ -52,4 +52,22 @@ public static class Mapping
         };
 
 
+    public static VoditeljiUdruge ToDomain(this DbModels.VoditeljiUdruge voditelji)
+       => new VoditeljiUdruge(
+           voditelji.Id,
+           voditelji.IdClan,
+           voditelji.Pozicija,
+           voditelji.NaPozicijiDo
+    );
+
+    public static DbModels.VoditeljiUdruge ToDbModel(this VoditeljiUdruge voditelji)
+        => new DbModels.VoditeljiUdruge()
+        {
+            Id = voditelji.Id,
+            IdClan = voditelji.IdClan,
+            Pozicija = voditelji.Pozicija,
+            NaPozicijiDo = voditelji.NaPozicijiDo
+        };
+
+
 }
