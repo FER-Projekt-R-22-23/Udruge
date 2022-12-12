@@ -4,28 +4,28 @@ using UdrugeApp.Commons;
 namespace UdrugeApp.Domain.Models;
 public class VoditeljiUdruge : Entity<int>
 {
-    private int _Id;
+    private int _IdUdruge;
     private int _IdClan;
     private string _Pozicija;
     private DateTime? _NaPozicijiDo;
 
 
-    public int Id { get => _Id; set => _Id = value; }
+    public int IdUdruge { get => _IdUdruge; set => _IdUdruge = value; }
     public int IdClan { get => _IdClan; set => _IdClan = value; }
     public string Pozicija { get => _Pozicija; set => _Pozicija = value; }
     public DateTime? NaPozicijiDo { get => _NaPozicijiDo; set => _NaPozicijiDo = value; }
 
 
-    public VoditeljiUdruge(int id, int idClan, string Pozicija, DateTime? NaPozicijiDo) : base(id)
+    public VoditeljiUdruge(int IdUdruge, int idClan, string Pozicija, DateTime? NaPozicijiDo) : base(IdUdruge)
     {
         if (string.IsNullOrEmpty(Pozicija))
         {
             throw new ArgumentException($"'{nameof(Pozicija)}' cannot be null or empty.", nameof(Pozicija));
         }
 
-        if (string.IsNullOrEmpty(id.ToString()))
+        if (string.IsNullOrEmpty(IdUdruge.ToString()))
         {
-            throw new ArgumentException($"'{nameof(id)}' cannot be null or empty.", nameof(id));
+            throw new ArgumentException($"'{nameof(IdUdruge)}' cannot be null or empty.", nameof(IdUdruge));
         }
 
         if (string.IsNullOrEmpty(IdClan.ToString()))
@@ -33,7 +33,7 @@ public class VoditeljiUdruge : Entity<int>
             throw new ArgumentException($"'{nameof(idClan)}' cannot be null or empty.", nameof(idClan));
         }
 
-        _Id = id;
+        _IdUdruge = IdUdruge;
         _IdClan = idClan;
         _Pozicija = Pozicija;
         _NaPozicijiDo = NaPozicijiDo;
@@ -44,7 +44,7 @@ public class VoditeljiUdruge : Entity<int>
     {
         return obj is not null &&
                 obj is VoditeljiUdruge VoditeljiUdruge &&
-               _Id == VoditeljiUdruge._Id &&
+               _IdUdruge == VoditeljiUdruge._IdUdruge &&
                _IdClan == VoditeljiUdruge._IdClan &&
                _Pozicija == VoditeljiUdruge._Pozicija &&
                _NaPozicijiDo == VoditeljiUdruge._NaPozicijiDo;
@@ -52,7 +52,7 @@ public class VoditeljiUdruge : Entity<int>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(_Id, _IdClan, _Pozicija, _NaPozicijiDo);
+        return HashCode.Combine(_IdUdruge, _IdClan, _Pozicija, _NaPozicijiDo);
     }
 
     public override Result IsValid()

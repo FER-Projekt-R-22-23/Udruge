@@ -3,6 +3,7 @@ using UdrugeApp.DataAccess.SqlServer.Data.DbModels;
 using UdrugeApp.Repositories;
 using UdrugeApp.Repositories.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 
 var builder = WebApplication.CreateBuilder(args);

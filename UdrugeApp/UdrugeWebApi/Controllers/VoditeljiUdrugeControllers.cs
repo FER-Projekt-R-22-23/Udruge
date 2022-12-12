@@ -1,10 +1,11 @@
+using ExampleApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using UdrugeApp.Repositories;
 using UdrugeWebApi.DTOs;
+using UdrugeApp.Repositories.SqlServer;
+using UdrugeApp.Repositories;
 using BaseLibrary;
-using UdrugeApp.Domain.Models;
 using System.Data;
-
+using System;
 namespace UdrugeWebApi.Controllers
 {
 
@@ -28,7 +29,7 @@ namespace UdrugeWebApi.Controllers
 
             return VoditeljiUdrugeResult switch
             {
-                { IsSuccess: true } => Ok(VoditeljiUdruge<udrugeResult.Data),
+                { IsSuccess: true } => Ok(VoditeljiUdrugeResult.Data),
                 { IsFailure: true } => NotFound(),
                 { IsException: true } or _ => Problem(VoditeljiUdrugeResult.Message, statusCode: 500)
             };
@@ -43,7 +44,7 @@ namespace UdrugeWebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (id != role.Id)
+            if (id != VoditeljiUdruge._IdUdruge)
             {
                 return BadRequest();
             }
@@ -81,7 +82,7 @@ namespace UdrugeWebApi.Controllers
                 .Bind(() => _VoditeljiUdrugeRepository.Insert(domainVoditeljiUdruge));
 
             return result
-                ? CreatedAtAction("GetVoditeljiUdruge", new { id = voditeljiUdruge.Id }, voditeljiUdruge)
+                ? CreatedAtAction("GetVoditeljiUdruge", new { id = voditeljiUdruge._IdUdruge }, voditeljiUdruge)
                 : Problem(result.Message, statusCode: 500);
         }
 

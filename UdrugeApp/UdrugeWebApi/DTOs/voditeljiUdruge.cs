@@ -6,7 +6,7 @@ namespace UdrugeWebApi.DTOs;
 
 public class VoditeljiUdruge
 {
-    public int _Id { get; set; }
+    public int _IdUdruge { get; set; }
     public int _IdClan { get; set; }
 
     [Required(ErrorMessage = "Pozicija can't be empty", AllowEmptyStrings = false)]
@@ -22,7 +22,7 @@ public static partial class DtoMapping
     public static VoditeljiUdruge ToDto(this DomainModels.VoditeljiUdruge VoditeljiUdruge)
         => new VoditeljiUdruge()
         {
-            _Id = VoditeljiUdruge.Id,
+            _IdUdruge = VoditeljiUdruge.IdUdruge,
             _IdClan = VoditeljiUdruge.IdClan,
             _Pozicija = VoditeljiUdruge.Pozicija,
             _NaPozicijiDo = VoditeljiUdruge.NaPozicijiDo
@@ -30,7 +30,7 @@ public static partial class DtoMapping
 
     public static DomainModels.VoditeljiUdruge ToDomain(this VoditeljiUdruge VoditeljiUdruge)
         => new DomainModels.VoditeljiUdruge(
-            VoditeljiUdruge._Id,
+            VoditeljiUdruge._IdUdruge,
             VoditeljiUdruge._IdClan,
             VoditeljiUdruge._Pozicija,
             VoditeljiUdruge._NaPozicijiDo

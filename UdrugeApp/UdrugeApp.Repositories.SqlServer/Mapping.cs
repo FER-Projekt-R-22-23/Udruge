@@ -54,7 +54,7 @@ public static class Mapping
 
     public static VoditeljiUdruge ToDomain(this DbModels.VoditeljiUdruge voditelji)
        => new VoditeljiUdruge(
-           voditelji.Id,
+           voditelji.IdUdruge,
            voditelji.IdClan,
            voditelji.Pozicija,
            voditelji.NaPozicijiDo
@@ -63,7 +63,7 @@ public static class Mapping
     public static DbModels.VoditeljiUdruge ToDbModel(this VoditeljiUdruge voditelji)
         => new DbModels.VoditeljiUdruge()
         {
-            Id = voditelji.Id,
+            IdUdruge = voditelji.IdUdruge,
             IdClan = voditelji.IdClan,
             Pozicija = voditelji.Pozicija,
             NaPozicijiDo = voditelji.NaPozicijiDo
