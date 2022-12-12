@@ -37,7 +37,8 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
         {
             var model = _dbContext.VoditeljiUdruge
                           .AsNoTracking()
-                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.Id.Equals(id));
+                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.IdClan
+                          .Equals(id));
             return model is not null;
         }
         catch (Exception)
@@ -67,7 +68,7 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
         {
             var model = _dbContext.VoditeljiUdruge
                           .AsNoTracking()
-                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.Id.Equals(id))?
+                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.IdClan.Equals(id))?
                           .ToDomain();
 
             return model is not null
@@ -128,7 +129,7 @@ public class VoditeljiUdrugeRepository : IVoditeljiUdrugeRepository
         {
             var model = _dbContext.VoditeljiUdruge
                           .AsNoTracking()
-                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.Id.Equals(id));
+                          .FirstOrDefault(VoditeljiUdruge => VoditeljiUdruge.IdClan.Equals(id));
 
             if (model is not null)
             {

@@ -21,6 +21,18 @@ namespace UdrugeWebApi.Controllers
             _VoditeljiUdrugeRepository = context;
         }
 
+        // GET: api/VoditeljiUdruge
+        [HttpGet]
+        public ActionResult<IEnumerable<Udruge>> GetAllVoditeljiUdruge()
+        {
+            var VoditeljiUdrugeResult = _VoditeljiUdrugeRepository.GetAll()
+                .Map(_VoditeljiUdrugeRepository=> _VoditeljiUdrugeRepository.Select(DtoMapping.ToDto));
+
+            return VoditeljiUdrugeResult
+                ? Ok(VoditeljiUdrugeResult.Data)
+                : Problem(VoditeljiUdrugeResult.Message, statusCode: 500);
+        }
+
         // GET: api/VoditeljiUdruge/5
         [HttpGet("{id}")]
         public ActionResult<VoditeljiUdruge> GetVoditeljiUdruge(int id)
