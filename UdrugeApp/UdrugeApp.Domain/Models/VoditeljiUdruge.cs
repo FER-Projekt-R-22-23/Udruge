@@ -2,7 +2,7 @@ using BaseLibrary;
 using UdrugeApp.Commons;
 
 namespace UdrugeApp.Domain.Models;
-public class VoditeljiUdruge
+public class VoditeljiUdruge : Entity<int>
 {
     private int _Id;
     private int _IdClan;
@@ -16,7 +16,7 @@ public class VoditeljiUdruge
     public DateTime? NaPozicijiDo { get => _NaPozicijiDo; set => _NaPozicijiDo = value; }
 
 
-    public VoditeljiUdruge(int id, int idClan, string Pozicija, DateTime? NaPozicijiDo)
+    public VoditeljiUdruge(int id, int idClan, string Pozicija, DateTime? NaPozicijiDo) : base(id)
     {
         if (string.IsNullOrEmpty(Pozicija))
         {
