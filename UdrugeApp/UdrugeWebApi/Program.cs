@@ -31,6 +31,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IUdrugeRepository, UdrugeRepository>();
 builder.Services.AddTransient<IVoditeljiUdrugeRepository, VoditeljiUdrugeRepository>();
 builder.Services.AddTransient<IProstoriRepository, ProstoriRepository>();
+builder.Services.AddTransient<IPotrosniResursRepository, PotrosniResursRepository>();
+builder.Services.AddTransient<ITrajniResursRepository, TrajniResursRepository>();
 
 
 var app = builder.Build();

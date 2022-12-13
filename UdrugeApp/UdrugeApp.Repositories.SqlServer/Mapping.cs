@@ -80,9 +80,18 @@ public static class Mapping
                 Naziv = resurs.Naziv
             }
         };
-    
+
     public static TrajniResurs ToDomain(this DbModels.TrajniResursi resurs)
-        => new TrajniResurs(
+    {
+        Console.WriteLine(resurs.IdResursa);
+        Console.WriteLine(resurs.InventarniBroj);
+        Console.WriteLine(resurs.JeDostupno);
+        Console.WriteLine(resurs.IdResursaNavigation);
+        Console.WriteLine(resurs.IdResursaNavigation.Napomena);
+        Console.WriteLine(resurs.IdResursaNavigation.DatumNabave);
+
+        
+        return new TrajniResurs(
             resurs.IdResursa,
             resurs.IdResursaNavigation.Naziv,
             resurs.IdResursaNavigation.Napomena,
@@ -92,6 +101,9 @@ public static class Mapping
             resurs.InventarniBroj,
             resurs.JeDostupno
         );
+    }
+    
+        
 
     //Jel ovo ok jer tamo u resursi ima inverse property
     public static DbModels.TrajniResursi ToDbModel(this TrajniResurs resurs)

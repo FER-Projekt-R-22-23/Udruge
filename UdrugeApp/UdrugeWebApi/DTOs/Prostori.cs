@@ -32,7 +32,7 @@ public static partial class DtoMapping
         => new Prostori()
         {
             Id = Prostori.Id,
-            IdUdruge = Prostori.Id,
+            IdUdruge = Prostori.IdUdruge,
             Adresa = Prostori.Adresa,
             Namjena = Prostori.Namjena,
             Dodijelio = Prostori.Dodijelio,
