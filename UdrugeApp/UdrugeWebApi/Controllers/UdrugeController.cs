@@ -57,7 +57,7 @@ public class UdrugeController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        if (id != udruge._IdUdruge)
+        if (id != udruge.IdUdruge)
         {
             return BadRequest();
         }
@@ -81,13 +81,13 @@ public class UdrugeController : ControllerBase
     // POST: api/Udruge
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public ActionResult<Udruge> CreateUdruge(Udruge udruge)
+    public ActionResult<Udruge> CreateUdruge([FromBody] Udruge udruge)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-
+        
         var domainUdruge = udruge.ToDomain();
 
         var validationResult = domainUdruge.IsValid();
@@ -101,7 +101,7 @@ public class UdrugeController : ControllerBase
             .Bind(() => _udrugeRepository.Insert(domainUdruge));
 
         return result
-            ? CreatedAtAction("PostUdruge", new { id = udruge._IdUdruge}, udruge)
+            ? CreatedAtAction("PostUdruge", new { id = udruge.IdUdruge}, udruge)
             : Problem(result.Message, statusCode: 500);
     }
 
