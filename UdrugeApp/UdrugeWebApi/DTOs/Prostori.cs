@@ -23,6 +23,8 @@ public class Prostori
 
     [DataType(DataType.DateTime)]
     public DateTime? DodjeljenoDo { get; set; }
+    public float? GeoDuzina { get; set; }
+    public float? GeoSirina { get; set; }
 }
 
 
@@ -36,7 +38,9 @@ public static partial class DtoMapping
             Adresa = Prostori.Adresa,
             Namjena = Prostori.Namjena,
             Dodijelio = Prostori.Dodijelio,
-            DodjeljenoDo = Prostori.DodjeljenoDo
+            DodjeljenoDo = Prostori.DodjeljenoDo,
+            GeoDuzina = Prostori.GeoDuzina,
+            GeoSirina = Prostori.GeoSirina
         };
 
     public static DomainModels.Prostori ToDomain(this Prostori Prostori)
@@ -46,6 +50,8 @@ public static partial class DtoMapping
             Prostori.Adresa,
             Prostori.Namjena,
             Prostori.Dodijelio,
-            Prostori.DodjeljenoDo
+            Prostori.DodjeljenoDo,
+            Prostori.GeoDuzina,
+            Prostori.GeoSirina
             );
 }
