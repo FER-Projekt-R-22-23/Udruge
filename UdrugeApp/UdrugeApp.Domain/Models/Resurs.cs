@@ -4,7 +4,7 @@ using UdrugeApp.Commons;
 
 namespace UdrugeApp.Domain.Models;
 
-public abstract class Resurs : Entity<int>
+public class Resurs : Entity<int>
 {
 
     private string _naziv;

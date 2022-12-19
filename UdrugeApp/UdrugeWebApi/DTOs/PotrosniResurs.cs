@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 using DomainModels = UdrugeApp.Domain.Models;
 
 namespace UdrugeWebApi.DTOs;
@@ -26,15 +27,14 @@ public static partial class DtoMapping
             Naziv = resurs.Naziv
         };
 
-    public static DomainModels.PotrosniResurs ToDomain(this PotrosniResurs resurs)
+    public static DomainModels.PotrosniResurs ToDomain(this PotrosniResurs resurs, DomainModels.Udruge udruga, DomainModels.Prostori prostor)
         => new DomainModels.PotrosniResurs(
             resurs.Id,
             resurs.Naziv,
             resurs.Naponema,
             resurs.DatumNabave,
-            //Kako cu dalje?? Jesam li ja to uopce dobro skuzio
-            null,
-            null,
+            udruga,
+            prostor,
             resurs.RokTrajanja
         );
 }

@@ -28,11 +28,6 @@ public class TrajniResurs : Resurs
         _inventarniBroj = inventarniBroj;
         _jeDostupno = jeDostupno;
     }
-
-    public void ChangeAvailability()
-    {
-        _jeDostupno = !_jeDostupno;
-    } 
     
     //Radi li ovdje da je i resurs i potrosni resurs
     public override bool Equals(object? obj)

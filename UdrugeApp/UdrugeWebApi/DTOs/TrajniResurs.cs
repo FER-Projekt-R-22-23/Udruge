@@ -10,7 +10,6 @@ public class TrajniResurs : Resurs
     [StringLength(6, MinimumLength = 6, ErrorMessage = "InventarniBroj must be 6 characters")]
     public String InventarniBroj { get; set; } = String.Empty;
     
-    //Trebam li ovdje settat default value u true?
     public bool JeDostupno { get; set; }
     
 }
@@ -30,15 +29,14 @@ public static partial class DtoMapping
             Naziv = resurs.Naziv
         };
 
-    public static DomainModels.TrajniResurs ToDomain(this TrajniResurs resurs)
+    public static DomainModels.TrajniResurs ToDomain(this TrajniResurs resurs, DomainModels.Udruge udruga, DomainModels.Prostori prostor)
         => new DomainModels.TrajniResurs(
             resurs.Id,
             resurs.Naziv,
             resurs.Naponema,
             resurs.DatumNabave,
-            //Kako cu dalje?? Jesam li ja to uopce dobro skuzio
-            null,
-            null,
+            udruga,
+            prostor,
             resurs.InventarniBroj,
             resurs.JeDostupno
         );

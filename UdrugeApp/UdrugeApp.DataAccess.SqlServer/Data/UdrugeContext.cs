@@ -30,12 +30,12 @@ namespace UdrugeApp.DataAccess.SqlServer.Data
         {
             modelBuilder.Entity<PotrosniResursi>(entity =>
             {
-                entity.Property(e => e.IdResursa).ValueGeneratedOnAdd();
+                entity.Property(e => e.IdResursa).ValueGeneratedNever();
 
                 entity.HasOne(d => d.IdResursaNavigation)
                     .WithOne(p => p.PotrosniResursi)
                     .HasForeignKey<PotrosniResursi>(d => d.IdResursa)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PotrosniResursi_Resursi");
             });
 
@@ -50,7 +50,7 @@ namespace UdrugeApp.DataAccess.SqlServer.Data
 
             modelBuilder.Entity<Resursi>(entity =>
             {
-                entity.Property(e => e.IdResursa).ValueGeneratedNever();
+                entity.Property(e => e.IdResursa).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.IdProstorNavigation)
                     .WithMany(p => p.Resursi)
@@ -67,14 +67,14 @@ namespace UdrugeApp.DataAccess.SqlServer.Data
 
             modelBuilder.Entity<TrajniResursi>(entity =>
             {
-                entity.Property(e => e.IdResursa).ValueGeneratedOnAdd();
+                entity.Property(e => e.IdResursa).ValueGeneratedNever();
 
                 entity.Property(e => e.InventarniBroj).IsFixedLength();
 
                 entity.HasOne(d => d.IdResursaNavigation)
                     .WithOne(p => p.TrajniResursi)
                     .HasForeignKey<TrajniResursi>(d => d.IdResursa)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_TrajniResursi_Resursi");
             });
 

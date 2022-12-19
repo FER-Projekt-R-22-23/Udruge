@@ -62,7 +62,7 @@ public static class Mapping
             resurs.RokTrajanja
         );
 
-    //Jel ovo ok jer tamo u resursi ima inverse property
+    
     public static DbModels.PotrosniResursi ToDbModel(this PotrosniResurs resurs)
         => new DbModels.PotrosniResursi()
         {
@@ -71,11 +71,9 @@ public static class Mapping
             IdResursaNavigation = new DbModels.Resursi()
             {
                 DatumNabave = resurs.DatumNabave,
-                IdProstor = resurs.Prostor.Id,  
-                IdProstorNavigation = ToDbModel(resurs.Prostor),
+                IdProstor = resurs.Prostor.Id,
                 IdResursa = resurs.Id,
                 IdUdruge = resurs.Udruga.Id,
-                IdUdrugeNavigation = ToDbModel(resurs.Udruga),
                 Napomena = resurs.Napomena,
                 Naziv = resurs.Naziv
             }
@@ -83,14 +81,6 @@ public static class Mapping
 
     public static TrajniResurs ToDomain(this DbModels.TrajniResursi resurs)
     {
-        Console.WriteLine(resurs.IdResursa);
-        Console.WriteLine(resurs.InventarniBroj);
-        Console.WriteLine(resurs.JeDostupno);
-        Console.WriteLine(resurs.IdResursaNavigation);
-        Console.WriteLine(resurs.IdResursaNavigation.Napomena);
-        Console.WriteLine(resurs.IdResursaNavigation.DatumNabave);
-
-        
         return new TrajniResurs(
             resurs.IdResursa,
             resurs.IdResursaNavigation.Naziv,
@@ -103,9 +93,29 @@ public static class Mapping
         );
     }
     
-        
+    public static DbModels.Resursi ToDbModel(this Resurs resurs)
+        => new DbModels.Resursi()
+        {
+            IdResursa = resurs.Id,
+            DatumNabave = resurs.DatumNabave,
+            IdProstor = resurs.Prostor.Id,
+            IdUdruge = resurs.Udruga.Id,
+            Napomena = resurs.Napomena,
+            Naziv = resurs.Naziv
+        };
 
-    //Jel ovo ok jer tamo u resursi ima inverse property
+    public static Resurs ToDomain(this DbModels.Resursi resurs)
+    {
+        return new Resurs(
+            resurs.IdResursa,
+            resurs.Naziv,
+            resurs.Napomena,
+            resurs.DatumNabave,
+            ToDomain(resurs.IdUdrugeNavigation),
+            ToDomain(resurs.IdProstorNavigation)
+        );
+    }
+
     public static DbModels.TrajniResursi ToDbModel(this TrajniResurs resurs)
         => new DbModels.TrajniResursi()
         {
@@ -113,11 +123,9 @@ public static class Mapping
             IdResursaNavigation = new DbModels.Resursi()
             {
                 DatumNabave = resurs.DatumNabave,
-                IdProstor = resurs.Prostor.Id,  
-                IdProstorNavigation = ToDbModel(resurs.Prostor),
+                IdProstor = resurs.Prostor.Id,
                 IdResursa = resurs.Id,
                 IdUdruge = resurs.Udruga.Id,
-                IdUdrugeNavigation = ToDbModel(resurs.Udruga),
                 Napomena = resurs.Napomena,
                 Naziv = resurs.Naziv
             },

@@ -1,8 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using DomainModels = UdrugeApp.Domain.Models;
 
 namespace UdrugeWebApi.DTOs;
 
-public abstract class Resurs
+public class Resurs
 {
     public int Id { get; set; }
     
@@ -22,5 +23,28 @@ public abstract class Resurs
     
     [StringLength(100, ErrorMessage = "Napomena can't be longer than 50 characters")]
     public string? Naponema { get; set; } = string.Empty;
-    
+}
+
+public static partial class DtoMapping
+{
+    public static Resurs ToDto(this DomainModels.Resurs resurs)
+        => new Resurs()
+        {
+            Id = resurs.Id,
+            IdUdruge = resurs.Udruga.IdUdruge,
+            IdProstor = resurs.Prostor.Id,
+            DatumNabave = resurs.DatumNabave,
+            Naponema = resurs.Napomena,
+            Naziv = resurs.Naziv
+        };
+
+    public static DomainModels.Resurs ToDomain(this Resurs resurs, DomainModels.Udruge udruga, DomainModels.Prostori prostor)
+        => new DomainModels.Resurs(
+            resurs.Id,
+            resurs.Naziv,
+            resurs.Naponema,
+            resurs.DatumNabave,
+            udruga,
+            prostor
+        );
 }

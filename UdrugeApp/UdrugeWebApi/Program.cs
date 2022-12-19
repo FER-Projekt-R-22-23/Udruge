@@ -1,9 +1,7 @@
 using UdrugeApp.DataAccess.SqlServer.Data;
-using UdrugeApp.DataAccess.SqlServer.Data.DbModels;
 using UdrugeApp.Repositories;
 using UdrugeApp.Repositories.SqlServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ExampleApp.Repositories.SqlServer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,9 +29,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IUdrugeRepository, UdrugeRepository>();
 builder.Services.AddTransient<IVoditeljiUdrugeRepository, VoditeljiUdrugeRepository>();
 builder.Services.AddTransient<IProstoriRepository, ProstoriRepository>();
-builder.Services.AddTransient<IPotrosniResursRepository, PotrosniResursRepository>();
-builder.Services.AddTransient<ITrajniResursRepository, TrajniResursRepository>();
-
+builder.Services.AddTransient<IResursRepository, ResursRepository>();
+builder.Services.AddHttpClient("Clanstvo", client =>
+{
+    client.BaseAddress = new Uri("localhost:7273/api");
+});
 
 var app = builder.Build();
 
