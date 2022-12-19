@@ -23,8 +23,8 @@ public class Prostori
 
     [DataType(DataType.DateTime)]
     public DateTime? DodjeljenoDo { get; set; }
-    public float? GeoDuzina { get; set; }
-    public float? GeoSirina { get; set; }
+    public decimal? GeoDuzina { get; set; }
+    public decimal? GeoSirina { get; set; }
 }
 
 

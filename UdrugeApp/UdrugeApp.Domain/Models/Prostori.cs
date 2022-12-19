@@ -10,8 +10,8 @@ public class Prostori : Entity<int>
     private string _Namjena;
     private string _Dodijelio;
     private DateTime? _DodjeljenoDo;
-    private float? _GeoDuzina;
-    private float? _GeoSirina;
+    private decimal? _GeoDuzina;
+    private decimal? _GeoSirina;
 
     public int Id { get => _Id; set => _Id = value; } // ako ne radi, ovo vj treba izbrisat :)
     public int IdUdruge { get => _IdUdruge; set => _IdUdruge = value; }
@@ -19,10 +19,10 @@ public class Prostori : Entity<int>
     public string Namjena { get => _Namjena; set => _Namjena = value; }
     public string Dodijelio { get => _Dodijelio; set => _Dodijelio = value; }
     public DateTime? DodjeljenoDo { get => _DodjeljenoDo; set => _DodjeljenoDo = value; }
-    public float? GeoDuzina { get => GeoDuzina; set => GeoDuzina = value; }
-    public float? GeoSirina { get => GeoSirina; set => GeoSirina = value; }
+    public decimal? GeoDuzina { get => GeoDuzina; set => GeoDuzina = value; }
+    public decimal? GeoSirina { get => GeoSirina; set => GeoSirina = value; }
 
-    public Prostori(int id, int idUdruge, string Adresa, string Namjena, string Dodijelio, DateTime? DodjeljenoDo, float? GeoDuzina, float? GeoSirina) : base(id)
+    public Prostori(int id, int idUdruge, string Adresa, string Namjena, string Dodijelio, DateTime? DodjeljenoDo, decimal? GeoDuzina, decimal? GeoSirina) : base(id)
     {
         if (string.IsNullOrEmpty(Adresa))
         {
