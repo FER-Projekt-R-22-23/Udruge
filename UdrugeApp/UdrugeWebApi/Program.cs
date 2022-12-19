@@ -30,10 +30,12 @@ builder.Services.AddTransient<IUdrugeRepository, UdrugeRepository>();
 builder.Services.AddTransient<IVoditeljiUdrugeRepository, VoditeljiUdrugeRepository>();
 builder.Services.AddTransient<IProstoriRepository, ProstoriRepository>();
 builder.Services.AddTransient<IResursRepository, ResursRepository>();
+HttpClientHandler clientHandler = new HttpClientHandler();
+clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 builder.Services.AddHttpClient("Clanstvo", client =>
 {
-    client.BaseAddress = new Uri("localhost:7273/api");
-});
+    client.BaseAddress = new Uri("https://localhost:7273");
+}).ConfigurePrimaryHttpMessageHandler(x => clientHandler);
 
 var app = builder.Build();
 

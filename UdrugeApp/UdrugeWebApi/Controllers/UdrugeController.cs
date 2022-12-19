@@ -1,14 +1,11 @@
-﻿using ExampleApp.Repositories;
+﻿using BaseLibrary;
 using Microsoft.AspNetCore.Mvc;
-using UdrugeWebApi.DTOs;
-using UdrugeApp.Repositories.SqlServer;
 using UdrugeApp.Repositories;
-using BaseLibrary;
-using System.Data;
-using System;
+using UdrugeWebApi.DTOs;
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace ExampleWebApi.Controllers;
+namespace UdrugeWebApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class UdrugeController : ControllerBase
@@ -22,10 +19,12 @@ public class UdrugeController : ControllerBase
 
     // GET: api/Udruge
     [HttpGet]
-    public ActionResult<IEnumerable<Udruge>> GetAllUdruge()
+    public ActionResult<IEnumerable<Udruge>> GetAllClanovi()
     {
         var udrugeResults = _udrugeRepository.GetAll()
             .Map(udruge => udruge.Select(DtoMapping.ToDto));
+        
+        
 
         return udrugeResults
             ? Ok(udrugeResults.Data)
@@ -46,9 +45,6 @@ public class UdrugeController : ControllerBase
         };
     }
 
-
-    // PUT: api/Udruge/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public IActionResult EditUdruge(int id, Udruge udruge)
     {
