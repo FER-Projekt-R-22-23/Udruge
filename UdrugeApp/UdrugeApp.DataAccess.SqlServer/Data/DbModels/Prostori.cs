@@ -34,9 +34,9 @@ namespace UdrugeApp.DataAccess.SqlServer.Data.DbModels
         [Column(TypeName = "date")]
         public DateTime? DodjeljenoDo { get; set; }
         [Column(TypeName = "decimal(5, 5)")]
-        public decimal? GeoDuzina { get; set; }
+        public float? GeoDuzina { get; set; }
         [Column(TypeName = "decimal(5, 5)")]
-        public decimal? GeoSirina { get; set; }
+        public float? GeoSirina { get; set; }
 
         [ForeignKey("IdUdruge")]
         [InverseProperty("Prostori")]

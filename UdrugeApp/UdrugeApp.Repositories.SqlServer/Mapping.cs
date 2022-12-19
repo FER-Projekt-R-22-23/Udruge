@@ -36,7 +36,9 @@ public static class Mapping
            prostori.Adresa,
            prostori.Namjena,
            prostori.Dodijelio,
-           prostori.DodjeljenoDo
+           prostori.DodjeljenoDo,
+            prostori.GeoDuzina,
+            prostori.GeoSirina
            
     );
 
@@ -48,7 +50,9 @@ public static class Mapping
             Adresa = prostori.Adresa,
             Namjena = prostori.Namjena,
             Dodijelio = prostori.Dodijelio,
-            DodjeljenoDo = prostori.DodjeljenoDo
+            DodjeljenoDo = prostori.DodjeljenoDo,
+            GeoDuzina = prostori.GeoDuzina,
+            GeoSirina = prostori.GeoSirina
         };
     
     public static PotrosniResurs ToDomain(this DbModels.PotrosniResursi resurs)
