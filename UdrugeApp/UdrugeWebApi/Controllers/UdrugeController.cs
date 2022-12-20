@@ -97,7 +97,7 @@ public class UdrugeController : ControllerBase
             .Bind(() => _udrugeRepository.Insert(domainUdruge));
 
         return result
-            ? CreatedAtAction("PostUdruge", new { id = udruge.IdUdruge}, udruge)
+            ? CreatedAtAction("CreateUdruge", new { id = udruge.IdUdruge}, udruge)
             : Problem(result.Message, statusCode: 500);
     }
 
@@ -112,5 +112,13 @@ public class UdrugeController : ControllerBase
         return deleteResult
             ? NoContent()
             : Problem(deleteResult.Message, statusCode: 500);
+    }
+
+    [HttpGet("Clanovi")]
+    public IActionResult GetAllMembers(int id)
+    {
+        //Ne vidim nacin za dohvatit clanove specificne udruge
+        
+        return Ok();
     }
 }

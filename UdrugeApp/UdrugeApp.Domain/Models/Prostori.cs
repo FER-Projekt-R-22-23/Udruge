@@ -13,14 +13,14 @@ public class Prostori : Entity<int>
     private decimal? _GeoDuzina;
     private decimal? _GeoSirina;
 
-    public int Id { get => _Id; set => _Id = value; } // ako ne radi, ovo vj treba izbrisat :)
+   
     public int IdUdruge { get => _IdUdruge; set => _IdUdruge = value; }
     public string Adresa { get => _Adresa; set => _Adresa = value; }
     public string Namjena { get => _Namjena; set => _Namjena = value; }
     public string Dodijelio { get => _Dodijelio; set => _Dodijelio = value; }
     public DateTime? DodjeljenoDo { get => _DodjeljenoDo; set => _DodjeljenoDo = value; }
-    public decimal? GeoDuzina { get => GeoDuzina; set => GeoDuzina = value; }
-    public decimal? GeoSirina { get => GeoSirina; set => GeoSirina = value; }
+    public decimal? GeoDuzina { get => _GeoDuzina; set => _GeoDuzina = value; }
+    public decimal? GeoSirina { get => _GeoSirina; set => _GeoSirina = value; }
 
     public Prostori(int id, int idUdruge, string Adresa, string Namjena, string Dodijelio, DateTime? DodjeljenoDo, decimal? GeoDuzina, decimal? GeoSirina) : base(id)
     {
