@@ -18,8 +18,6 @@ namespace UdrugeApp.DataAccess.SqlServer.Data.DbModels
             VoditeljiUdruge = new HashSet<VoditeljiUdruge>();
         }
 
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int IdUdruge { get; set; }
         [Required]
