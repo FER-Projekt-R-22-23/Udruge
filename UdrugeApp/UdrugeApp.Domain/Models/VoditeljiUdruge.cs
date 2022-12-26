@@ -16,7 +16,7 @@ public class VoditeljiUdruge : Entity<int>
     public DateTime? NaPozicijiDo { get => _NaPozicijiDo; set => _NaPozicijiDo = value; }
 
 
-    public VoditeljiUdruge(int IdUdruge, int idClan, string Pozicija, DateTime? NaPozicijiDo) : base(IdUdruge)
+    public VoditeljiUdruge(int idUdruge, int idClan, string Pozicija, DateTime? NaPozicijiDo) : base(idUdruge)
     {
         if (string.IsNullOrEmpty(Pozicija))
         {
@@ -25,7 +25,7 @@ public class VoditeljiUdruge : Entity<int>
 
         if (string.IsNullOrEmpty(IdUdruge.ToString()))
         {
-            throw new ArgumentException($"'{nameof(IdUdruge)}' cannot be null or empty.", nameof(IdUdruge));
+            throw new ArgumentException($"'{nameof(idUdruge)}' cannot be null or empty.", nameof(idUdruge));
         }
 
         if (string.IsNullOrEmpty(IdClan.ToString()))
@@ -33,7 +33,7 @@ public class VoditeljiUdruge : Entity<int>
             throw new ArgumentException($"'{nameof(idClan)}' cannot be null or empty.", nameof(idClan));
         }
 
-        _IdUdruge = IdUdruge;
+        _IdUdruge = idUdruge;
         _IdClan = idClan;
         _Pozicija = Pozicija;
         _NaPozicijiDo = NaPozicijiDo;

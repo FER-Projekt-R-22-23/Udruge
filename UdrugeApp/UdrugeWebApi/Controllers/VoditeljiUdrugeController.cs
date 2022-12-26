@@ -14,18 +14,18 @@ namespace UdrugeWebApi.Controllers
     public class VoditeljiUdrugeController : ControllerBase
     {
 
-        private readonly IVoditeljiUdrugeRepository _VoditeljiUdrugeRepository;
+        private readonly IVoditeljiUdrugeRepository _voditeljiUdrugeRepository;
 
         public VoditeljiUdrugeController(IVoditeljiUdrugeRepository context)
         {
-            _VoditeljiUdrugeRepository = context;
+            _voditeljiUdrugeRepository = context;
         }
 
         // GET: api/VoditeljiUdruge
         [HttpGet]
         public ActionResult<IEnumerable<Udruge>> GetAllVoditeljiUdruge()
         {
-            var VoditeljiUdrugeResult = _VoditeljiUdrugeRepository.GetAll()
+            var VoditeljiUdrugeResult = _voditeljiUdrugeRepository.GetAll()
                 .Map(_VoditeljiUdrugeRepository=> _VoditeljiUdrugeRepository.Select(DtoMapping.ToDto));
 
             return VoditeljiUdrugeResult
@@ -37,7 +37,7 @@ namespace UdrugeWebApi.Controllers
         [HttpGet("{id}")]
         public ActionResult<VoditeljiUdruge> GetVoditeljiUdruge(int id)
         {
-            var VoditeljiUdrugeResult = _VoditeljiUdrugeRepository.Get(id).Map(DtoMapping.ToDto);
+            var VoditeljiUdrugeResult = _voditeljiUdrugeRepository.Get(id).Map(DtoMapping.ToDto);
 
             return VoditeljiUdrugeResult switch
             {
@@ -50,30 +50,30 @@ namespace UdrugeWebApi.Controllers
         // PUT: api/VoditeljiUdruge/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult EditVoditeljiUdruge(int id, VoditeljiUdruge VoditeljiUdruge)
+        public IActionResult EditVoditeljiUdruge(int id, VoditeljiUdruge voditeljiUdruge)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (id != VoditeljiUdruge._IdUdruge)
+            if (id != voditeljiUdruge.IdClan)
             {
                 return BadRequest();
             }
 
-            if (!_VoditeljiUdrugeRepository.Exists(id))
+            if (!_voditeljiUdrugeRepository.Exists(id))
             {
                 return NotFound();
             }
 
-            var domainVoditeljiUdruge = VoditeljiUdruge.ToDomain();
+            var domainVoditeljiUdruge = voditeljiUdruge.ToDomain();
 
             var result =
                 domainVoditeljiUdruge.IsValid()
-                .Bind(() => _VoditeljiUdrugeRepository.Update(domainVoditeljiUdruge));
+                .Bind(() => _voditeljiUdrugeRepository.Update(domainVoditeljiUdruge));
 
             return result
-                ? AcceptedAtAction("EditVoditeljiUdruge", VoditeljiUdruge)
+                ? AcceptedAtAction("EditVoditeljiUdruge", voditeljiUdruge)
                 : Problem(result.Message, statusCode: 500);
         }
 
@@ -91,10 +91,10 @@ namespace UdrugeWebApi.Controllers
 
             var result =
                 domainVoditeljiUdruge.IsValid()
-                .Bind(() => _VoditeljiUdrugeRepository.Insert(domainVoditeljiUdruge));
+                .Bind(() => _voditeljiUdrugeRepository.Insert(domainVoditeljiUdruge));
 
             return result
-                ? CreatedAtAction("GetVoditeljiUdruge", new { id = voditeljiUdruge._IdUdruge }, voditeljiUdruge)
+                ? CreatedAtAction("GetVoditeljiUdruge", new { id = voditeljiUdruge.IdUdruge }, voditeljiUdruge)
                 : Problem(result.Message, statusCode: 500);
         }
 
@@ -103,10 +103,10 @@ namespace UdrugeWebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteVoditeljiUdruge(int id)
         {
-            if (!_VoditeljiUdrugeRepository.Exists(id))
+            if (!_voditeljiUdrugeRepository.Exists(id))
                 return NotFound();
 
-            var deleteResult = _VoditeljiUdrugeRepository.Remove(id);
+            var deleteResult = _voditeljiUdrugeRepository.Remove(id);
             return deleteResult
                 ? NoContent()
                 : Problem(deleteResult.Message, statusCode: 500);
