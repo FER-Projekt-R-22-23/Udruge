@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdrugeApp.Domain", "UdrugeA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdrugeApp.Providers", "UdrugeApp.Providers\UdrugeApp.Providers.csproj", "{3CBDF429-BF20-459D-B5C5-FE43924E902A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdrugeApp.Providers.Http", "UdrugeApp.Providers.Http\UdrugeApp.Providers.Http.csproj", "{77675F51-2528-4F56-9B57-1831F6230D7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{3CBDF429-BF20-459D-B5C5-FE43924E902A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CBDF429-BF20-459D-B5C5-FE43924E902A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CBDF429-BF20-459D-B5C5-FE43924E902A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77675F51-2528-4F56-9B57-1831F6230D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77675F51-2528-4F56-9B57-1831F6230D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77675F51-2528-4F56-9B57-1831F6230D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77675F51-2528-4F56-9B57-1831F6230D7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

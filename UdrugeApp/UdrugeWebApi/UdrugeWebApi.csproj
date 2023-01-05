@@ -23,6 +23,8 @@
       <ProjectReference Include="..\UdrugeApp.Commons\UdrugeApp.Commons.csproj" />
       <ProjectReference Include="..\UdrugeApp.DataAccess.SqlServer\UdrugeApp.DataAccess.SqlServer.csproj" />
 	  <ProjectReference Include="..\UdrugeApp.Domain\UdrugeApp.Domain.csproj" />
+	  <ProjectReference Include="..\UdrugeApp.Providers.Http\UdrugeApp.Providers.Http.csproj" />
+	  <ProjectReference Include="..\UdrugeApp.Providers\UdrugeApp.Providers.csproj" />
 	  <ProjectReference Include="..\UdrugeApp.Repositories\UdrugeApp.Repositories.csproj" />
       <ProjectReference Include="..\UdrugeApp.Repositories.SqlServer\UdrugeApp.Repositories.SqlServer.csproj" />
     </ItemGroup>

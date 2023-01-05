@@ -3,6 +3,8 @@ using UdrugeApp.Repositories;
 using UdrugeApp.Repositories.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using ExampleApp.Repositories.SqlServer;
+using UdrugeApp.Providers;
+using UdrugeApp.Providers.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,11 +32,16 @@ builder.Services.AddTransient<IUdrugeRepository, UdrugeRepository>();
 builder.Services.AddTransient<IVoditeljiUdrugeRepository, VoditeljiUdrugeRepository>();
 builder.Services.AddTransient<IProstoriRepository, ProstoriRepository>();
 builder.Services.AddTransient<IResursRepository, ResursRepository>();
+builder.Services.AddTransient<IClanstvoProvider, ClanstvoProvider>();
 HttpClientHandler clientHandler = new HttpClientHandler();
 clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 builder.Services.AddHttpClient("Clanstvo", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7273");
+    client.BaseAddress = new Uri(builder.Configuration.GetSection("RemoteServices").GetValue<String>("Clanstvo"));
+}).ConfigurePrimaryHttpMessageHandler(x => clientHandler);
+builder.Services.AddHttpClient("Akcije/Skole", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration.GetSection("RemoteServices").GetValue<String>("AkcijeISkole"));
 }).ConfigurePrimaryHttpMessageHandler(x => clientHandler);
 
 var app = builder.Build();

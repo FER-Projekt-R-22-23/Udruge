@@ -13,14 +13,12 @@ public class ResursController : ControllerBase
     private readonly IResursRepository _resursRepository;
     private readonly IProstoriRepository _prostoriRepository;
     private readonly IUdrugeRepository _udrugeRepository;
-    private readonly HttpClient _httpClient;
 
     public ResursController(IResursRepository resursRepository, IProstoriRepository prostoriRepository, IUdrugeRepository udrugeRepository, IHttpClientFactory httpClientFactory)
     {
         _resursRepository = resursRepository;
         _prostoriRepository = prostoriRepository;
         _udrugeRepository = udrugeRepository;
-        _httpClient = httpClientFactory.CreateClient("Clanstvo");
     }
     
     [HttpGet]
@@ -33,17 +31,7 @@ public class ResursController : ControllerBase
             ? Ok(resursResults.Data)
             : Problem(resursResults.Message, statusCode: 500);
     }
-    
-        
-    [HttpGet("Clanarine")]
-    public async Task<ActionResult<IEnumerable<Resurs>>> GetAllClanovi()
-    {
-        var resursResults = await _httpClient.GetFromJsonAsync<IEnumerable<Clan>>("api/Clan");
 
-        return Ok(resursResults);
-
-    }
-    
     [HttpGet("TrajniResursi")]
     public ActionResult<IEnumerable<TrajniResurs>> GetAllTrajniResursi()
     {

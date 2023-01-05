@@ -1,5 +1,9 @@
+using BaseLibrary;
 using Microsoft.AspNetCore.Mvc;
+using UdrugeApp.Providers;
+using UdrugeApp.Providers.Http.DTOs;
 using UdrugeWebApi.DTOs;
+using DtoMapping = UdrugeWebApi.DTOs.DtoMapping;
 
 namespace UdrugeWebApi.Controllers;
 
@@ -7,18 +11,26 @@ namespace UdrugeWebApi.Controllers;
 [ApiController]
 public class ClanarineController : ControllerBase
 {
-    private readonly HttpClient _httpClient;
 
-    public ClanarineController(IHttpClientFactory httpClientFactory)
+    private readonly IClanstvoProvider _clanstvoProvider;
+
+    public ClanarineController(IClanstvoProvider clanstvoProvider)
     {
-        _httpClient = httpClientFactory.CreateClient("Clanstvo");
+        _clanstvoProvider = clanstvoProvider;
     }
     
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Clan>>> GetDidntPay()
+    [HttpGet("Neplacene")]
+    public ActionResult<IEnumerable<NeplaceneClanarine>> GetNeplaceneClanarine([FromQuery]int[] listOfIds)
     {
-        var resursResults = await _httpClient.GetFromJsonAsync<IEnumerable<Clan>>("api/Clan/Neplacene");
-
-        return Ok(resursResults);
+        var clanoviResult = _clanstvoProvider.GetDidntPay(listOfIds.ToList())
+            .Map(c => c.Select(clanarina => clanarina.ToDto()));
+        
+        Console.WriteLine(clanoviResult.Data);
+        
+        return clanoviResult
+            ? Ok(clanoviResult.Data)
+            : Problem(clanoviResult.Message, statusCode: 500);
     }
+    
+
 }

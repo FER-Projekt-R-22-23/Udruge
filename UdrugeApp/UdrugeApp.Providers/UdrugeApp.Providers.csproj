@@ -6,4 +6,14 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="BaseLibrary">
+        <HintPath>..\..\..\..\..\.nuget\packages\baselibrary\1.0.0\lib\net6.0\BaseLibrary.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\UdrugeApp.Domain\UdrugeApp.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

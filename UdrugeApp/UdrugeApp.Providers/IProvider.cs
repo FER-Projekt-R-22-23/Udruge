@@ -1,5 +1,5 @@
 ﻿namespace UdrugeApp.Providers;
 
-public class Class1
+public interface IProvider
 {
 }
