@@ -21,10 +21,10 @@ namespace UdrugeWebApi.DTOs
         public static NeplaceneClanarine ToDto(this UdrugeApp.Domain.Models.Clan clan)
             => new NeplaceneClanarine()
             {
-                Id = clan.Clanarina.First().ClanId,
+                Id = clan.Id,
                 Ime = clan.Ime,
                 Prezime = clan.Prezime,
-                Clanarina = clan.Clanarina.Select(pr => pr.ToDto())
+                Clanarina = clan.Clanarina.Any() ? clan.Clanarina.Select(pr => pr.ToDto()) : Enumerable.Empty<Clanarina>()
             };
 
         // public static UdrugeApp.Domain.Models.Clan ToDomain(NeplaceneClanarine clan)

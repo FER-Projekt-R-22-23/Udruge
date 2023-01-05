@@ -18,16 +18,17 @@ namespace UdrugeApp.Providers.Http.DTOs
         
         public static partial class DtoMapping
         {
-            public static ClanNijePlatio ToDto(Domain.Models.Clan clan)
-                => new ClanNijePlatio()
-                {
-                    Ime = clan.Ime,
-                    Prezime = clan.Prezime,
-                    Clanarina = clan.Clanarina.Select(pr => pr.ToDto()).ToList()
-                };
+            // public static ClanNijePlatio ToDto(Domain.Models.Clan clan)
+                // => new ClanNijePlatio()
+                // {
+                //     Ime = clan.Ime,
+                //     Prezime = clan.Prezime,
+                //     Clanarina = clan.Clanarina.Select(pr => pr.ToDto()).ToList()
+                // };
 
             public static Domain.Models.Clan ToDomain(ClanNijePlatio clan)
                 => new Domain.Models.Clan(
+                    clan.Id,
                     clan.Ime,
                     clan.Prezime,
                     clan.Clanarina.Select(c => c.ToDomain())

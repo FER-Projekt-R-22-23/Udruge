@@ -16,16 +16,52 @@ public class ClanstvoProvider : IClanstvoProvider
     
     public Result<IEnumerable<Clan>> GetDidntPay(IEnumerable<int> ids)
     {
-        var clanoviResult = _httpClient.GetFromJsonAsync<IEnumerable<ClanNijePlatio>>("api/Clan/NisuPlatili");
 
-        if (clanoviResult.Result != null)
+        string IdsU = String.Empty;
+        
+        foreach (var id in ids)
         {
-            var clanovi = clanoviResult.Result.Select(c => ClanNijePlatio.DtoMapping.ToDomain(c));
+            if (IdsU.Equals(String.Empty))
+            {
+                IdsU += "ids="+id;
+            }
+            IdsU += "&ids="+id;
+        }
+        
+        var clanoviResult = _httpClient.GetFromJsonAsync<IEnumerable<ClanNijePlatio>>($"api/Clan/NisuPlatili?{IdsU}");
+
+        if (clanoviResult.Result!.Any())
+        {
+            var clanovi = clanoviResult.Result!.Select(c => ClanNijePlatio.DtoMapping.ToDomain(c));
 
             return Results.OnSuccess(clanovi);
         }
 
-        return Results.OnFailure<IEnumerable<Clan>>("Clanovi nemaju neplacenih clanarina");
+        return Results.OnFailure<IEnumerable<Clan>>("Clanovi ne postoje");
     }
-    
+
+    public Result<IEnumerable<Clan>> GetRangovi(IEnumerable<int> ids)
+    {
+        string IdsU = String.Empty;
+        
+        foreach (var id in ids)
+        {
+            if (IdsU.Equals(String.Empty))
+            {
+                IdsU += "ids="+id;
+            }
+            IdsU += "&ids="+id;
+        }
+        
+        var clanoviResult = _httpClient.GetFromJsonAsync<IEnumerable<ClanRangZasluga>>($"api/Clan/RangoviZasluga?{IdsU}");
+
+        if (clanoviResult.Result!.Any())
+        {
+            var clanovi = clanoviResult.Result!.Select(c => DtoMapping.ToDomain(c));
+
+            return Results.OnSuccess(clanovi);
+        }
+
+        return Results.OnFailure<IEnumerable<Clan>>("Clanovi ne postoje");
+    }
 }

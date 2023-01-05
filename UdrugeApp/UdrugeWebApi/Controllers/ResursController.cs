@@ -70,7 +70,6 @@ public class ResursController : ControllerBase
     [HttpPost("PotrosniResursi")]
     public ActionResult<PotrosniResurs> CreatePotrosniResurs(PotrosniResurs resurs)
     {
-        Console.WriteLine(resurs.DatumNabave);
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
