@@ -19,8 +19,6 @@ IConfiguration configuration = builder.Environment.IsDevelopment()
 
 builder.Services.AddDbContext<UdrugeContext>(options => options.UseSqlServer(configuration.GetConnectionString("UdrugeDB")));
 //Add transients
-//builder.Services.AddTransient<I<ime>, <ime>>();
-
 
 // Add services to the container.
 
@@ -33,12 +31,13 @@ builder.Services.AddTransient<IVoditeljiUdrugeRepository, VoditeljiUdrugeReposit
 builder.Services.AddTransient<IProstoriRepository, ProstoriRepository>();
 builder.Services.AddTransient<IResursRepository, ResursRepository>();
 builder.Services.AddTransient<IClanstvoProvider, ClanstvoProvider>();
+
+var clanstvoProviderOptions = configuration.GetSection("ClanstvoProviderOptions").Get<ClanstvoProviderOptions>();
+
+builder.Services.AddTransient<ClanstvoProviderOptions>(services => clanstvoProviderOptions);
+
 HttpClientHandler clientHandler = new HttpClientHandler();
 clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
-builder.Services.AddHttpClient("Clanstvo", client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration.GetSection("RemoteServices").GetValue<String>("Clanstvo"));
-}).ConfigurePrimaryHttpMessageHandler(x => clientHandler);
 builder.Services.AddHttpClient("Akcije/Skole", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration.GetSection("RemoteServices").GetValue<String>("AkcijeISkole"));

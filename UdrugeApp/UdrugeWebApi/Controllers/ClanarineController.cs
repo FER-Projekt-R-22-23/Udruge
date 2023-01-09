@@ -20,7 +20,7 @@ public class ClanstvoController : ControllerBase
     [HttpGet("Neplacene")]
     public ActionResult<IEnumerable<NeplaceneClanarine>> GetNeplaceneClanarine([FromQuery]int[] listOfIds)
     {
-        var clanoviResult = _clanstvoProvider.GetDidntPay(listOfIds.ToList())
+        var clanoviResult = _clanstvoProvider.GetDidntPay(listOfIds.ToList()).Result
             .Map(c => c.Select(clanarina => clanarina.ToDto()));
 
         return clanoviResult
@@ -31,7 +31,7 @@ public class ClanstvoController : ControllerBase
     [HttpGet("Rangovi")]
     public ActionResult<IEnumerable<ClanoviRang>> GetRangovi([FromQuery]int[] listOfIds)
     {
-        var clanoviResult = _clanstvoProvider.GetRangovi(listOfIds.ToList())
+        var clanoviResult = _clanstvoProvider.GetRangovi(listOfIds.ToList()).Result
             .Map(c => c.Select(clanarina => clanarina.ToRangDto()));
 
         return clanoviResult

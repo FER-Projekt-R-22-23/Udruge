@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using BaseLibrary;
+using Microsoft.Extensions.Http;
 using UdrugeApp.Domain.Models;
 using UdrugeApp.Providers.Http.DTOs;
 
@@ -7,32 +8,42 @@ namespace UdrugeApp.Providers.Http;
 
 public class ClanstvoProvider : IClanstvoProvider 
 {
-    private readonly HttpClient _httpClient;
+    private readonly ClanstvoProviderOptions _options;
 
-    public ClanstvoProvider(IHttpClientFactory httpClientFactory)
+    public ClanstvoProvider(ClanstvoProviderOptions clanstvoProviderOptions)
     {
-        _httpClient = httpClientFactory.CreateClient("Clanstvo");
+        _options = clanstvoProviderOptions;
     }
     
-    public Result<IEnumerable<Clan>> GetDidntPay(IEnumerable<int> ids)
+    public async Task<Result<IEnumerable<Clan>>> GetDidntPay(IEnumerable<int> ids)
     {
 
-        string IdsU = String.Empty;
+        string idsU = String.Empty;
         
         foreach (var id in ids)
         {
-            if (IdsU.Equals(String.Empty))
+            if (idsU.Equals(String.Empty))
             {
-                IdsU += "ids="+id;
+                idsU += "ids="+id;
             }
-            IdsU += "&ids="+id;
+            idsU += "&ids="+id;
+        }
+
+        IEnumerable<ClanNijePlatio>? clanoviResult;
+        
+        using (var httpClientHandler = new HttpClientHandler())
+        {
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true;
+            using (var httpClient = new HttpClient(httpClientHandler))
+            {
+                httpClient.BaseAddress = new Uri(_options.BaseUrl);
+                clanoviResult = await httpClient.GetFromJsonAsync<IEnumerable<ClanNijePlatio>>($"api/Clan/NisuPlatili?{idsU}");
+            }
         }
         
-        var clanoviResult = _httpClient.GetFromJsonAsync<IEnumerable<ClanNijePlatio>>($"api/Clan/NisuPlatili?{IdsU}");
-
-        if (clanoviResult.Result!.Any())
+        if (clanoviResult!.Any())
         {
-            var clanovi = clanoviResult.Result!.Select(c => ClanNijePlatio.DtoMapping.ToDomain(c));
+            var clanovi = clanoviResult!.Select(c => ClanNijePlatio.DtoMapping.ToDomain(c));
 
             return Results.OnSuccess(clanovi);
         }
@@ -40,28 +51,40 @@ public class ClanstvoProvider : IClanstvoProvider
         return Results.OnFailure<IEnumerable<Clan>>("Clanovi ne postoje");
     }
 
-    public Result<IEnumerable<Clan>> GetRangovi(IEnumerable<int> ids)
+    public async Task<Result<IEnumerable<Clan>>> GetRangovi(IEnumerable<int> ids)
     {
-        string IdsU = String.Empty;
+        string idsU = String.Empty;
         
         foreach (var id in ids)
         {
-            if (IdsU.Equals(String.Empty))
+            if (idsU.Equals(String.Empty))
             {
-                IdsU += "ids="+id;
+                idsU += "ids="+id;
             }
-            IdsU += "&ids="+id;
+            idsU += "&ids="+id;
         }
         
-        var clanoviResult = _httpClient.GetFromJsonAsync<IEnumerable<ClanRangZasluga>>($"api/Clan/RangoviZasluga?{IdsU}");
-
-        if (clanoviResult.Result!.Any())
+        IEnumerable<ClanRangZasluga>? clanoviResult;
+        
+        using (var httpClientHandler = new HttpClientHandler())
         {
-            var clanovi = clanoviResult.Result!.Select(c => DtoMapping.ToDomain(c));
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) => true;
+            using (var httpClient = new HttpClient(httpClientHandler))
+            {
+                httpClient.BaseAddress = new Uri(_options.BaseUrl);
+                clanoviResult = await httpClient.GetFromJsonAsync<IEnumerable<ClanRangZasluga>>($"api/Clan/RangoviZasluga?{idsU}");
+            }
+        }
+
+
+        if (clanoviResult!.Any())
+        {
+            var clanovi = clanoviResult!.Select(c => DtoMapping.ToDomain(c));
 
             return Results.OnSuccess(clanovi);
         }
 
         return Results.OnFailure<IEnumerable<Clan>>("Clanovi ne postoje");
     }
+
 }
