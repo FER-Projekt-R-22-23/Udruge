@@ -200,4 +200,13 @@ public class ResursController : ControllerBase
             ? NoContent()
             : Problem(deleteResult.Message, statusCode: 500);
     }
+
+    [HttpPost("PosudiResurs")]
+    public ActionResult<String> PosudiResurs(ZahtjevDetails zahtjevDetails)
+    {
+        var resursi = _resursRepository.PosudiResurs(zahtjevDetails.NazivMaterijalnaPotreba);
+        return Ok(resursi.Data);
+       
+    }
+
 }

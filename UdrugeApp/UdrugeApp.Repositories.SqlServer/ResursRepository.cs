@@ -399,4 +399,17 @@ public class ResursRepository : IResursRepository
             return Results.OnException<IEnumerable<Resurs>>(e);
         }
     }
+
+    public Result<String> PosudiResurs(String naziv)
+    {
+        var resursi = _dbContext.Resursi.FirstOrDefault(r => r.Naziv == naziv);
+        if(resursi == null)
+        {
+            return Results.OnSuccess<String>("Nije zdovoljeno");
+        }
+        else
+        {
+            return Results.OnSuccess<String>("Zadovoljeno");
+        }
+    }
 }

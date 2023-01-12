@@ -35,4 +35,6 @@ public interface IResursRepository : IRepository<int, Resurs>
     public Result<IEnumerable<Resurs>> GetByIdProstori(int id);
     
     public Result<IEnumerable<Resurs>> GetByNaziv(string naziv);
+
+    public Result<String> PosudiResurs(string naziv);
 }
