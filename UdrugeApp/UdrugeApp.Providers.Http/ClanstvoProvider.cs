@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+﻿/*using System.Net.Http.Json;
 using BaseLibrary;
 using Microsoft.Extensions.Http;
 using UdrugeApp.Domain.Models;
@@ -87,4 +87,4 @@ public class ClanstvoProvider : IClanstvoProvider
         return Results.OnFailure<IEnumerable<Clan>>("Clanovi ne postoje");
     }
 
-}
+}*/

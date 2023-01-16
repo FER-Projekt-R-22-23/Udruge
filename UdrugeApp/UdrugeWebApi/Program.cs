@@ -30,7 +30,7 @@ builder.Services.AddTransient<IUdrugeRepository, UdrugeRepository>();
 builder.Services.AddTransient<IVoditeljiUdrugeRepository, VoditeljiUdrugeRepository>();
 builder.Services.AddTransient<IProstoriRepository, ProstoriRepository>();
 builder.Services.AddTransient<IResursRepository, ResursRepository>();
-builder.Services.AddTransient<IClanstvoProvider, ClanstvoProvider>();
+//builder.Services.AddTransient<IClanstvoProvider, ClanstvoProvider>();
 
 var clanstvoProviderOptions = configuration.GetSection("ClanstvoProviderOptions").Get<ClanstvoProviderOptions>();
 
