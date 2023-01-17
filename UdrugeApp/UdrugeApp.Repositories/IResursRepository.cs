@@ -5,6 +5,8 @@ namespace UdrugeApp.Repositories;
 
 public interface IResursRepository : IRepository<int, Resurs>
 {
+    public Result<TrajniResurs> GetTrajni(int id);
+    public Result<PotrosniResurs> GetPotrosni(int id);
     public Result<IEnumerable<PotrosniResurs>> GetAllPotrosni();
 
     public Result<IEnumerable<TrajniResurs>> GetAllTrajni();

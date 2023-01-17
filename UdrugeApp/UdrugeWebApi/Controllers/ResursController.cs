@@ -54,10 +54,23 @@ public class ResursController : ControllerBase
             : Problem(resursResults.Message, statusCode: 500);
     }
     
-    [HttpGet("{id}")]
-    public ActionResult<Resurs> GetResursById(int id)
+    [HttpGet("Trajni/{id}")]
+    public ActionResult<Resurs> GetTrajniResursById(int id)
     {
-        var resursResults = _resursRepository.Get(id).Map(DtoMapping.ToDto);
+        var resursResults = _resursRepository.GetTrajni(id).Map(DtoMapping.ToDto);
+    
+        return resursResults switch
+        {
+            { IsSuccess: true } => Ok(resursResults.Data),
+            { IsFailure: true } => NotFound(),
+            { IsException: true } or _ => Problem(resursResults.Message, statusCode: 500)
+        };
+    }
+    
+    [HttpGet("Potrosni/{id}")]
+    public ActionResult<Resurs> GetPotrosniResursById(int id)
+    {
+        var resursResults = _resursRepository.GetPotrosni(id).Map(DtoMapping.ToDto);
     
         return resursResults switch
         {
@@ -74,7 +87,7 @@ public class ResursController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-        
+
         var udruga = _udrugeRepository.Get(resurs.IdUdruge);
         var prostor = _prostoriRepository.Get(resurs.IdProstor);
 
@@ -92,7 +105,7 @@ public class ResursController : ControllerBase
     
         //Sto radi ovaj createdAtAction??
         return result
-            ? CreatedAtAction("GetResursById", new { id = resurs.Id }, resurs)
+            ? CreatedAtAction("GetPotrosniResursById", new { id = resurs.Id }, resurs)
             : Problem(result.Message, statusCode: 500);
     }
     
@@ -109,19 +122,25 @@ public class ResursController : ControllerBase
         
         var domainResurs = resurs.ToDomain(udruga.Data, prostor.Data);
 
+        Console.WriteLine(resurs.IdProstor);
+        Console.WriteLine(domainResurs.Napomena);
+        
         var validationResult = domainResurs.IsValid();
         if (!validationResult)
         {
+            Console.WriteLine(validationResult.Message);
             return Problem(validationResult.Message, statusCode: 500);
         }
-    
+        
         var result =
             domainResurs.IsValid()
                 .Bind(() => _resursRepository.Insert(domainResurs));
+        
+        Console.WriteLine(domainResurs.Prostor);
     
         //Sto radi ovaj createdAtAction??
         return result
-            ? CreatedAtAction("GetResursById", new { id = resurs.Id }, resurs)
+            ? CreatedAtAction("GetTrajniResursById", new { id = resurs.Id }, resurs)
             : Problem(result.Message, statusCode: 500);
     }
     
@@ -132,12 +151,12 @@ public class ResursController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-    
+        
         if (id != resurs.Id)
         {
             return BadRequest();
         }
-    
+        
         if (!_resursRepository.ExistsTrajni(id))
         {
             return NotFound();
@@ -164,17 +183,17 @@ public class ResursController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-    
+        Console.WriteLine(resurs.Id);
+        Console.WriteLine(id);
         if (id != resurs.Id)
         {
             return BadRequest();
         }
-    
+        
         if (!_resursRepository.ExistsPotrosni(id))
         {
             return NotFound();
         }
-    
         var udruga = _udrugeRepository.Get(resurs.IdUdruge);
         var prostor = _prostoriRepository.Get(resurs.IdProstor);
         
@@ -183,7 +202,6 @@ public class ResursController : ControllerBase
         var result =
             domainResurs.IsValid()
                 .Bind(() => _resursRepository.Update(domainResurs));
-    
         return result
             ? AcceptedAtAction("EditPotrosniResurs", resurs)
             : Problem(result.Message, statusCode: 500);

@@ -23,7 +23,7 @@ public static partial class DtoMapping
             IdProstor = resurs.Prostor.Id,
             DatumNabave = resurs.DatumNabave,
             RokTrajanja= resurs.RokTrajanja,
-            Naponema = resurs.Napomena,
+            Napomena = resurs.Napomena,
             Naziv = resurs.Naziv
         };
 
@@ -31,7 +31,7 @@ public static partial class DtoMapping
         => new DomainModels.PotrosniResurs(
             resurs.Id,
             resurs.Naziv,
-            resurs.Naponema,
+            resurs.Napomena,
             resurs.DatumNabave,
             udruga,
             prostor,

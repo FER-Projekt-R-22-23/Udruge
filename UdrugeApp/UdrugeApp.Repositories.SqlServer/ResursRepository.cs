@@ -16,23 +16,47 @@ public class ResursRepository : IResursRepository
         _dbContext = dbContext;
     }
     
-    public Result<Resurs> Get(int id)
+    public Result<TrajniResurs> GetTrajni(int id)
     {
         try
         {
-            var model = _dbContext.Resursi.AsNoTracking()
-                .Include(d => d.IdUdrugeNavigation)
-                .Include(d => d.IdProstorNavigation)
+            var model = _dbContext.TrajniResursi.AsNoTracking()
+                .Include(d => d.IdResursaNavigation.IdUdrugeNavigation)
+                .Include(d => d.IdResursaNavigation.IdProstorNavigation)
                 .FirstOrDefault(resurs => resurs.IdResursa.Equals(id))?.ToDomain();
 
             return model is not null
                 ? Results.OnSuccess(model)
-                : Results.OnFailure<Resurs>($"No resurs with id {id} found");
+                : Results.OnFailure<TrajniResurs>($"No resurs with id {id} found");
         }
         catch (Exception e)
         {
-            return Results.OnException<Resurs>(e);
+            return Results.OnException<TrajniResurs>(e);
         }
+    }
+    
+    public Result<PotrosniResurs> GetPotrosni(int id)
+    {
+        try
+        {
+            var model = _dbContext.PotrosniResursi.AsNoTracking()
+                .Include(d => d.IdResursaNavigation.IdUdrugeNavigation)
+                .Include(d => d.IdResursaNavigation.IdProstorNavigation)
+                .FirstOrDefault(resurs => resurs.IdResursa.Equals(id))?.ToDomain();
+
+            return model is not null
+                ? Results.OnSuccess(model)
+                : Results.OnFailure<PotrosniResurs>($"No resurs with id {id} found");
+        }
+        catch (Exception e)
+        {
+            return Results.OnException<PotrosniResurs>(e);
+        }
+    }
+
+    public Result<Resurs> Get(int id)
+    {
+        throw new NotImplementedException();
     }
 
     public Result<IEnumerable<Resurs>> GetAll()

@@ -22,7 +22,7 @@ public class Resurs
     public DateTime DatumNabave { get; set; }
     
     [StringLength(100, ErrorMessage = "Napomena can't be longer than 50 characters")]
-    public string? Naponema { get; set; } = string.Empty;
+    public string? Napomena { get; set; } = string.Empty;
 }
 
 public static partial class DtoMapping
@@ -34,7 +34,7 @@ public static partial class DtoMapping
             IdUdruge = resurs.Udruga.IdUdruge,
             IdProstor = resurs.Prostor.Id,
             DatumNabave = resurs.DatumNabave,
-            Naponema = resurs.Napomena,
+            Napomena = resurs.Napomena,
             Naziv = resurs.Naziv
         };
 
@@ -42,7 +42,7 @@ public static partial class DtoMapping
         => new DomainModels.Resurs(
             resurs.Id,
             resurs.Naziv,
-            resurs.Naponema,
+            resurs.Napomena,
             resurs.DatumNabave,
             udruga,
             prostor

@@ -40,7 +40,7 @@ public class Resurs : Entity<int>
         }
 
         _naziv = naziv;
-        _napomena = napomena;
+        _napomena = napomena is not null ? napomena : String.Empty;
         _datumNabave = datumNabave;
         _udruga = udruga;
         _prostor = prostor;
