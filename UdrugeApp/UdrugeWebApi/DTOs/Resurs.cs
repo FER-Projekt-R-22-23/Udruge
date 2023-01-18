@@ -10,8 +10,12 @@ public class Resurs
     [Required(ErrorMessage = "IdUdruge can't be null")]
     public int IdUdruge { get; set; }
     
+    public string Udruga { get; set; }
+    
     [Required(ErrorMessage = "IdProstor can't be null")]
     public int IdProstor { get; set; }
+    
+    public string Prostor { get; set; }
 
     [Required(ErrorMessage = "Naziv can't be null")]
     [StringLength(50, ErrorMessage = "Naziv can't be longer than 50 characters")]
@@ -32,7 +36,9 @@ public static partial class DtoMapping
         {
             Id = resurs.Id,
             IdUdruge = resurs.Udruga.IdUdruge,
+            Udruga = resurs.Udruga.Naziv,
             IdProstor = resurs.Prostor.Id,
+            Prostor = resurs.Prostor.Adresa,
             DatumNabave = resurs.DatumNabave,
             Napomena = resurs.Napomena,
             Naziv = resurs.Naziv

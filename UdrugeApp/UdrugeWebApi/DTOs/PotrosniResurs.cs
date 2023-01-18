@@ -20,7 +20,9 @@ public static partial class DtoMapping
         {
             Id = resurs.Id,
             IdUdruge = resurs.Udruga.IdUdruge,
+            Udruga = resurs.Udruga.Naziv,
             IdProstor = resurs.Prostor.Id,
+            Prostor = resurs.Prostor.Adresa,
             DatumNabave = resurs.DatumNabave,
             RokTrajanja= resurs.RokTrajanja,
             Napomena = resurs.Napomena,
